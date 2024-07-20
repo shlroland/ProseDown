@@ -1,0 +1,10 @@
+@import '@unocss/reset/tailwind-compat.css';
+@import 'prosekit/basic/style.css';
+@import 'prosekit/basic/typography.css';
+
+body {
+  max-width: 900px;
+  padding: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
