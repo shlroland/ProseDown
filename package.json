@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "prosekit": "^0.9.9",
+    "prosekit": "^0.9.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -19,8 +19,8 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@unocss/reset": "^0.61.5",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "typescript": "^5.5.3",
+    "@vitejs/plugin-react-swc": "^3.7.0",
+    "typescript": "^5.5.4",
     "unocss": "^0.61.5",
     "vite": "^5.3.4"
   }
