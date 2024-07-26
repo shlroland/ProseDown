@@ -5,13 +5,28 @@ import { useCallback, useMemo } from 'react'
 
 import { createMarkdownEditor } from './create-editor'
 
+const markdownContent = `
+asdfsdaf***safsdf*** asdfasdf \`asdf\` 
+
+\`\`\`ts
+const xx: string = 'yy'
+\`\`\`
+
+1. xx
+2. 123
+
+- asdf
+- werq
+
+`
+
 export function Editor(props: {
   defaultDoc?: NodeJSON
   onDocUpdate?: (doc: NodeJSON) => void
 }) {
   const editor = useMemo(() => {
     const { editor, markdown } = createMarkdownEditor()
-    const doc = markdown.parseMarkdownText('asdfsdaf***safsdf*** asdfasdf `asdf`')
+    const doc = markdown.parseMarkdownText(markdownContent)
     editor.setContent(doc)
     return editor
   }, [])

@@ -1,5 +1,6 @@
-import { defineMarkSpec } from 'prosekit/core'
+import { defineMarkSpec, type Extension } from 'prosekit/core'
 import { registerAstFrom } from '../markdown/methods'
+import type { Attrs } from 'prosekit/pm/model'
 
 export function defineEmphasis() {
   return defineMarkSpec({
@@ -14,7 +15,11 @@ export function defineEmphasis() {
   })
 }
 
-type EmphasisExtension = ReturnType<typeof defineEmphasis>
+type EmphasisExtension = Extension<{
+  Marks: {
+    emphasis: Attrs
+  }
+}>
 
 export const astEmphasisFrom = registerAstFrom<EmphasisExtension>()(
   'emphasis',

@@ -2,17 +2,12 @@ import { type Data, type Processor, unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
 import type { AstFromAction, AstToAction, RemarkPlugin } from './types'
-import { isArray, isFunction } from 'remeda'
-import type {
-  ParentContent,
-  PhrasingContent,
-  Root,
-  RootContent,
-} from 'mdast'
+import { isArray, isFunction, isObjectType, values } from 'remeda'
+import type { ParentContent, PhrasingContent, Root, RootContent } from 'mdast'
 import type { DocExtension, Editor, MarkAction } from 'prosekit/core'
 import type { Mark, ProseMirrorNode } from 'prosekit/pm/model'
 import { isBasicContainer, isParentContent } from './utils'
-import type { ExtractFirst } from '../utils/type'
+import type { ExtractFirst, RemoveNonCallable } from '../utils/type'
 
 export class MarkdownProcessor<
   E extends Editor,
@@ -111,7 +106,7 @@ export class MarkdownProcessor<
   }
 
   processIndicatorContent(
-    markAction: MarkAction,
+    markAction: RemoveNonCallable<MarkAction>,
     content: PhrasingContent,
     text: string
     // index: number,
@@ -146,6 +141,31 @@ export class MarkdownProcessor<
         lastIndicator,
       ]
     )
+  }
+
+  extractTextContent(node: RootContent | RootContent[]): string {
+    if (!isArray(node)) {
+      if ('value' in node) {
+        return node.value
+      }
+      if (isParentContent(node)) {
+        return this.concatChildren(node.children)
+      }
+    } else {
+      return this.concatChildren(node)
+    }
+
+    return ''
+  }
+
+  concatChildren(children: RootContent[]) {
+    const result = []
+
+    for (let i = 0; i < children.length; i++) {
+      const content = children[i]
+      result[i] = this.extractTextContent(content)
+    }
+    return result.join('')
   }
 
   createTextNode(text: string) {

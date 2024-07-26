@@ -1,2 +1,6 @@
-// 提取每个元组的第一个元素并组合成联合类型
-export type ExtractFirst<T extends readonly [string, unknown][]> = T[number][0]
+export type ExtractFirst<T extends readonly [string, unknown][]> = T[number][0];
+
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export type RemoveNonCallable<T> = T extends (...args: any[]) => any
+  ? (...args: Parameters<T>) => ReturnType<T>
+  : never;

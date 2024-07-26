@@ -1,5 +1,6 @@
-import { defineMarkSpec } from 'prosekit/core'
+import { defineMarkSpec, type Extension } from 'prosekit/core'
 import { registerAstFrom } from '../markdown/methods'
+import type { Attrs } from 'prosekit/pm/model'
 
 export function defineInlineCode() {
   return defineMarkSpec({
@@ -13,7 +14,11 @@ export function defineInlineCode() {
   })
 }
 
-type InlineCodeExtension = ReturnType<typeof defineInlineCode>
+type InlineCodeExtension = Extension<{
+    Marks: {
+        inlineCode: Attrs;
+    };
+}>
 
 export const astInlineCodeFrom = registerAstFrom<InlineCodeExtension>()(
   'inlineCode',

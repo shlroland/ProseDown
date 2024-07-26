@@ -1,6 +1,7 @@
-import { defineMarkSpec } from 'prosekit/core'
+import { defineMarkSpec, type Extension } from 'prosekit/core'
 import { isString } from 'remeda'
 import { registerAstFrom } from '../markdown/methods'
+import type { Attrs } from 'prosekit/pm/model'
 
 export function defineStrong() {
   return defineMarkSpec({
@@ -21,7 +22,11 @@ export function defineStrong() {
   })
 }
 
-type StrongExtension = ReturnType<typeof defineStrong>
+type StrongExtension = Extension<{
+    Marks: {
+        strong: Attrs;
+    };
+}>
 
 export const astStrongFrom = registerAstFrom<StrongExtension>()(
   'strong',
