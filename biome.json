@@ -8,7 +8,11 @@
     "rules": {
       "recommended": true,
       "style": {
-        "noDefaultExport": "error"
+        "noDefaultExport": "error",
+        "noNonNullAssertion": "off"
+      },
+      "complexity": {
+        "noForEach": "off"
       }
     }
   },

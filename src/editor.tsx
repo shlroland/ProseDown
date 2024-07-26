@@ -1,24 +1,26 @@
-import { createEditor, jsonFromNode, type NodeJSON } from "prosekit/core";
-import type { ProseMirrorNode } from "prosekit/pm/model";
-import { ProseKit, useDocChange } from "prosekit/react";
-import { useCallback, useMemo } from "react";
+import { jsonFromNode, type NodeJSON } from 'prosekit/core'
+import type { ProseMirrorNode } from 'prosekit/pm/model'
+import { ProseKit, useDocChange } from 'prosekit/react'
+import { useCallback, useMemo } from 'react'
 
-import { defineExtension } from "./extensions";
+import { createMarkdownEditor } from './create-editor'
 
 export function Editor(props: {
-  defaultDoc?: NodeJSON;
-  onDocUpdate?: (doc: NodeJSON) => void;
+  defaultDoc?: NodeJSON
+  onDocUpdate?: (doc: NodeJSON) => void
 }) {
   const editor = useMemo(() => {
-    const extension = defineExtension();
-    return createEditor({ extension, defaultDoc: props.defaultDoc });
-  }, [props.defaultDoc]);
+    const { editor, markdown } = createMarkdownEditor()
+    const doc = markdown.parseMarkdownText('asdfsdaf***safsdf*** asdfasdf `asdf`')
+    editor.setContent(doc)
+    return editor
+  }, [])
 
   const handleDocChange = useCallback(
     (doc: ProseMirrorNode) => props.onDocUpdate?.(jsonFromNode(doc)),
-    [props.onDocUpdate],
-  );
-  useDocChange(handleDocChange, { editor });
+    [props.onDocUpdate]
+  )
+  useDocChange(handleDocChange, { editor })
 
   return (
     <ProseKit editor={editor}>
@@ -31,5 +33,5 @@ export function Editor(props: {
         </div>
       </div>
     </ProseKit>
-  );
+  )
 }

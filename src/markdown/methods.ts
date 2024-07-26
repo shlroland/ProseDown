@@ -1,0 +1,23 @@
+import type { RootContentNames } from 'mdast'
+import type { AstFromAction, AstToAction, RemarkPlugin } from './types'
+import type { Editor, Extension } from 'prosekit/core'
+
+export const registerRemark = (name: string | symbol, plugin: RemarkPlugin) => {
+  return [name, plugin]
+}
+
+export const registerAstFrom =
+  <E extends Extension>() =>
+  <T extends RootContentNames>(
+    type: T,
+    fn: AstFromAction<T, Editor<E>>
+  ):() =>  [T, AstFromAction<T, Editor<E>>] => {
+    return () => [type, fn]
+  }
+
+export const registerAstTo = <E extends Editor = Editor>(
+  type: string,
+  fn: AstToAction<E>
+) => {
+  return () => [type, fn]
+}

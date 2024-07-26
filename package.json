@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "prosekit": "^0.9.11",
+    "prosekit": "^0.9.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remark-parse": "^11.0.0",
@@ -28,6 +28,6 @@
     "@vitejs/plugin-react-swc": "^3.7.0",
     "typescript": "^5.5.4",
     "unocss": "^0.61.5",
-    "vite": "^5.3.4"
+    "vite": "^5.3.5"
   }
 }

@@ -1,7 +1,8 @@
 import { createRoot } from "react-dom/client";
-import "./styles/index.css";
 import { Editor } from "./editor";
 import { StrictMode } from "react";
+import "./styles/index.css";
+import 'virtual:uno.css'
 
 const element = document.getElementById("root");
 if (!element) throw new ReferenceError(`react contained doesn't exist`);
