@@ -33,7 +33,7 @@ export function defineBreak() {
   return defineBreakSpec()
 }
 
-export const AstBreakFrom = registerAstFrom<BreakExtension>()(
+export const astBreakFrom = registerAstFrom<BreakExtension>()(
   'break',
   (ctx) => {
     const breakAction = ctx.editor.nodes.break

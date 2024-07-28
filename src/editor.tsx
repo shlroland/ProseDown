@@ -8,7 +8,18 @@ import { createMarkdownEditor } from './create-editor'
 const markdownContent = `
 ## 4444
 
-asdfsdf**bb**
+> asdfsdf**bb**
+> asdfa\`asdfasf\`
+
+1. a
+2. b
+3. c
+
+- 1
+- 2
+- 3
+
+***
 `
 
 export function Editor(props: {

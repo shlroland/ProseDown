@@ -31,14 +31,6 @@ export function defineParagraphSpec(): ParagraphSpecExtension {
   })
 }
 
-export const astParagraphFrom = registerAstFrom<ParagraphExtension>()(
-  'paragraph',
-  (ctx, ast, text, _pos, marks) => {
-    const childNodes = ctx.fromPhrasingContent(ast, text, marks)
-    return ctx.editor.nodes.paragraph(...childNodes)
-  }
-)
-
 export const stringToMarkdownPlugin = registerRemarkPlugin('stringContent', {
   plugin: function () {
     const data = this.data()
@@ -55,6 +47,14 @@ export const stringToMarkdownPlugin = registerRemarkPlugin('stringContent', {
     })
   },
 })
+
+export const astParagraphFrom = registerAstFrom<ParagraphExtension>()(
+  'paragraph',
+  (ctx, ast, text, _pos, marks) => {
+    const childNodes = ctx.fromPhrasingContent(ast, text, marks)
+    return ctx.editor.nodes.paragraph(...childNodes)
+  }
+)
 
 export const astParagraphTo = registerAstTo('paragraph', (_ctx, node) => {
   const text = sanitizerText(node.textContent)

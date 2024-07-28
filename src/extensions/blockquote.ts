@@ -1,6 +1,7 @@
 import { defineNodeSpec, type Extension } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
-import { registerAstFrom } from '../markdown/methods'
+import { registerAstFrom, registerAstTo } from '../markdown/methods'
+import type { BlockContent, DefinitionContent } from 'mdast'
 
 export function defineBlockquoteSpec() {
   return defineNodeSpec({
@@ -29,3 +30,11 @@ export const astBlockquoteFrom = registerAstFrom<BlockquoteExtension>()(
     return blockquote(...nodes)
   }
 )
+export const astBlockquoteTo = registerAstTo('blockquote', (ctx, node) => {
+  return {
+    type: 'blockquote',
+    children: ctx.toMarkdownAst(node) as Array<
+      BlockContent | DefinitionContent
+    >,
+  }
+})

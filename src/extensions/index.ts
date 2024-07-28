@@ -13,12 +13,13 @@ import { union } from 'prosekit/core'
 import { astEmphasisFrom, defineEmphasis } from './emphasis'
 import { astHeadingFrom, astHeadingTo, defineHeading } from './heading'
 import { defineBlockquote } from 'prosekit/extensions/blockquote'
-import { astBlockquoteFrom } from './blockquote'
+import { astBlockquoteFrom, astBlockquoteTo } from './blockquote'
 import { astLinkFrom, defineLink } from './link'
-import { astListFrom, defineList } from './list'
-import { astListItemFrom, defineListItem } from './list-item'
-import { astCodeFrom, defineCode } from './code'
-import { AstBreakFrom, defineBreak } from './break'
+import { astBulletListTo, astListFrom, astOrderedListTo, defineList } from './list'
+import { astListItemFrom, astListItemTo, defineListItem } from './list-item'
+import { astCodeFrom, astCodeTo, defineCode } from './code'
+import { astBreakFrom, defineBreak } from './break'
+import { astThematicBreakFrom, astThematicBreakTo, defineThematicBreak } from './thematic-break'
 
 export function defineBasicDemoExtension() {
   return defineBasicExtension()
@@ -41,6 +42,7 @@ export function defineExtension() {
     defineListItem(),
     defineCode(),
     defineBreak(),
+    defineThematicBreak(),
   ])
 }
 
@@ -57,12 +59,22 @@ export function defineAstFrom() {
     astListFrom(),
     astListItemFrom(),
     astCodeFrom(),
-    AstBreakFrom(),
+    astBreakFrom(),
+    astThematicBreakFrom(),
   ] as const
 }
 
 export function defineAstTo() {
-  return [astParagraphTo(), astHeadingTo()]
+  return [
+    astParagraphTo(),
+    astHeadingTo(),
+    astBlockquoteTo(),
+    astCodeTo(),
+    astBulletListTo(),
+    astOrderedListTo(),
+    astListItemTo(),
+    astThematicBreakTo()
+  ]
 }
 
 export function defineRemarkPlugins() {
