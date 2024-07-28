@@ -6,25 +6,9 @@ import { useCallback, useMemo } from 'react'
 import { createMarkdownEditor } from './create-editor'
 
 const markdownContent = `
-asdfsdaf***safsdf*** as
-dfasdf \`asdf\` 
+## 4444
 
-lorem\\
-ipsum
-
-foo  
-bar
-
-\`\`\`ts
-const xx: string = 'yy'
-\`\`\`
-
-1. xx
-2. 123
-
-- asdf
-- werq
-
+asdfsdf**bb**
 `
 
 export function Editor(props: {
@@ -35,6 +19,9 @@ export function Editor(props: {
     const { editor, markdown } = createMarkdownEditor()
     const doc = markdown.fromMarkdownText(markdownContent)
     editor.setContent(doc)
+    setTimeout(() => {
+      console.log(markdown.toCurrentDocMarkdown())
+    })
     return editor
   }, [])
 

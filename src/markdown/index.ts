@@ -6,7 +6,12 @@ import { isArray, isFunction } from 'remeda'
 import type { ParentContent, PhrasingContent, Root, RootContent } from 'mdast'
 import type { DocExtension, Editor, MarkAction } from 'prosekit/core'
 import type { Mark, ProseMirrorNode } from 'prosekit/pm/model'
-import { isBasicContainer, isParentContent } from './utils'
+import {
+  basicContainers,
+  isBasicContainer,
+  isParentContent,
+  sanitizerText,
+} from './utils'
 import type { ExtractFirst, RemoveNonCallable } from '../utils/type'
 
 export class MarkdownProcessor<
@@ -39,7 +44,10 @@ export class MarkdownProcessor<
     this.editor = editor
     this.remarkPlugins = new Map(options.remarkPlugins ?? [])
     this.#data = options.data
-    this.#processor = this.createProcessor(this.remarkPlugins.values(), this.#data)
+    this.#processor = this.createProcessor(
+      this.remarkPlugins.values(),
+      this.#data
+    )
     this.astFrom = new Map(options.astFrom ?? [])
     this.astTo = new Map(options.astTo ?? [])
   }
@@ -55,6 +63,44 @@ export class MarkdownProcessor<
   fromMarkdownText(text: string) {
     const root = this.processor.parse(text)
     return this.fromRoot(root, text)
+  }
+
+  toCurrentDocMarkdown() {
+    return this.toMarkdownText(this.editor.state.doc)
+  }
+
+  toMarkdownText(doc: ProseMirrorNode) {
+    if (doc.type.name !== 'doc') {
+      throw Error('should pass `doc` node')
+    }
+    const root: Root = { type: 'root', children: this.toMarkdownAst(doc) }
+    return this.#processor.stringify(root)
+  }
+
+  toMarkdownAst(node: ProseMirrorNode) {
+    const result: RootContent[] = []
+
+    node.forEach((child) => {
+      const astToAction = this.astTo.get(child.type.name)
+      if (astToAction) {
+        const mdastNode = astToAction(this, child, result.at(-1))
+        mdastNode && result.push(mdastNode)
+      } else {
+        throw new Error(`[toMarkdown]: not support type '${child.type.name}'`)
+      }
+    })
+    return result
+  }
+
+  handlePMText(node: ProseMirrorNode) {
+    if (node.type.name === 'doc') throw new Error('use toMarkdown instead')
+    if (basicContainers.includes(node.type.name)) {
+      return sanitizerText(node.textContent)
+    }
+    if (node.type.name === 'heading') {
+      return `${'#'.repeat(node.attrs.level)} ${node.textContent}`
+    }
+    throw new Error('unknown node')
   }
 
   fromRoot(root: Root, text: string) {
@@ -78,7 +124,9 @@ export class MarkdownProcessor<
       if (astFromAction) {
         const childNodes = astFromAction(this, child, text, index, [], parent)
         if (!childNodes) return
-        isArray(childNodes) ? result.push(...childNodes) : result.push(childNodes)
+        isArray(childNodes)
+          ? result.push(...childNodes)
+          : result.push(childNodes)
       }
     })
 
@@ -95,9 +143,18 @@ export class MarkdownProcessor<
 
       const astFromAction = this.astFrom.get(child.type)
       if (astFromAction) {
-        const childNodes = astFromAction(this, child, text, index, marks, content)
+        const childNodes = astFromAction(
+          this,
+          child,
+          text,
+          index,
+          marks,
+          content
+        )
         if (!childNodes) return
-        isArray(childNodes) ? result.push(...childNodes) : result.push(childNodes)
+        isArray(childNodes)
+          ? result.push(...childNodes)
+          : result.push(childNodes)
         return
       }
     })

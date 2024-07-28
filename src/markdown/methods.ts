@@ -11,13 +11,18 @@ export const registerAstFrom =
   <T extends RootContentNames>(
     type: T,
     fn: AstFromAction<T, Editor<E>>
-  ):() =>  [T, AstFromAction<T, Editor<E>>] => {
+  ): (() => [T, AstFromAction<T, Editor<E>>]) => {
     return () => [type, fn]
   }
 
 export const registerAstTo = <E extends Editor = Editor>(
   type: string,
   fn: AstToAction<E>
-) => {
+): (() => [string, AstToAction<E>]) => {
   return () => [type, fn]
 }
+
+export const registerRemarkPlugin = (
+  name: string | symbol,
+  plugin: RemarkPlugin
+): [string | symbol, RemarkPlugin] => [name, plugin]

@@ -26,5 +26,5 @@ export type AstFromAction<
 export type AstToAction<E extends Editor = Editor> = (
   ctx: MarkdownProcessor<E>,
   curNode: ProseMirrorNode,
-  prevNode: ProseMirrorNode | undefined
+  prevNode: RootContent | undefined
 ) => RootContent

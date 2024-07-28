@@ -1,7 +1,17 @@
-import { defineNodeSpec, type Extension, type ParagraphExtension } from 'prosekit/core'
+import {
+  defineNodeSpec,
+  type Extension,
+  type ParagraphExtension,
+} from 'prosekit/core'
 export { defineParagraph } from 'prosekit/core'
-import { registerAstFrom } from '../markdown/methods'
+import {
+  registerAstFrom,
+  registerAstTo,
+  registerRemarkPlugin,
+} from '../markdown/methods'
 import type { Attrs } from 'prosekit/pm/model'
+import type { StringContent } from 'mdast'
+import { sanitizerText } from '../markdown/utils'
 
 type ParagraphSpecExtension = Extension<{
   Nodes: {
@@ -28,3 +38,28 @@ export const astParagraphFrom = registerAstFrom<ParagraphExtension>()(
     return ctx.editor.nodes.paragraph(...childNodes)
   }
 )
+
+export const stringToMarkdownPlugin = registerRemarkPlugin('stringContent', {
+  plugin: function () {
+    const data = this.data()
+    if (!data.toMarkdownExtensions) {
+      data.toMarkdownExtensions = []
+    }
+
+    data.toMarkdownExtensions.push({
+      handlers: {
+        stringContent: (node: StringContent) => {
+          return node.value
+        },
+      },
+    })
+  },
+})
+
+export const astParagraphTo = registerAstTo('paragraph', (_ctx, node) => {
+  const text = sanitizerText(node.textContent)
+  return {
+    type: 'paragraph',
+    children: [{ type: 'stringContent', value: text }],
+  }
+})

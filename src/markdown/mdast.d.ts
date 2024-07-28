@@ -1,25 +1,6 @@
-import type {
-  Blockquote,
-  Delete,
-  Emphasis,
-  FootnoteDefinition,
-  Heading,
-  Link,
-  LinkReference,
-  List,
-  ListItem,
-  Paragraph,
-  Root,
-  RootContent,
-  RootContentMap,
-  Strong,
-  Table,
-  TableCell,
-  TableRow,
-} from 'mdast'
-
+import 'mdast'
 declare module 'mdast' {
-  export type ParentContent =
+  type ParentContent =
     | Paragraph
     | Blockquote
     | Delete
@@ -35,5 +16,21 @@ declare module 'mdast' {
     | TableRow
     | TableCell
 
-  export type RootContentNames = keyof RootContentMap
+  type RootContentNames = keyof RootContentMap
+
+  interface StringContent extends Literal {
+    type: 'stringContent'
+  }
+
+  interface BlockContentMap {
+    stringContent: StringContent
+  }
+
+  interface RootContentMap {
+    stringContent: StringContent
+  }
+
+  interface PhrasingContentMap {
+    stringContent: StringContent
+  }
 }

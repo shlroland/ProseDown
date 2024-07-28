@@ -3,10 +3,15 @@ import { defineDoc } from './doc'
 import { astTextFrom, defineText } from './text'
 import { astStrongFrom, defineStrong } from './strong'
 import { astInlineCodeFrom, defineInlineCode } from './inline-code'
-import { astParagraphFrom, defineParagraph } from './paragraph'
+import {
+  astParagraphFrom,
+  astParagraphTo,
+  defineParagraph,
+  stringToMarkdownPlugin,
+} from './paragraph'
 import { union } from 'prosekit/core'
 import { astEmphasisFrom, defineEmphasis } from './emphasis'
-import { astHeadingFrom, defineHeading } from './heading'
+import { astHeadingFrom, astHeadingTo, defineHeading } from './heading'
 import { defineBlockquote } from 'prosekit/extensions/blockquote'
 import { astBlockquoteFrom } from './blockquote'
 import { astLinkFrom, defineLink } from './link'
@@ -54,4 +59,12 @@ export function defineAstFrom() {
     astCodeFrom(),
     AstBreakFrom(),
   ] as const
+}
+
+export function defineAstTo() {
+  return [astParagraphTo(), astHeadingTo()]
+}
+
+export function defineRemarkPlugins() {
+  return [stringToMarkdownPlugin]
 }
