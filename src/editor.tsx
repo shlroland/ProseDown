@@ -6,7 +6,14 @@ import { useCallback, useMemo } from 'react'
 import { createMarkdownEditor } from './create-editor'
 
 const markdownContent = `
-asdfsdaf***safsdf*** asdfasdf \`asdf\` 
+asdfsdaf***safsdf*** as
+dfasdf \`asdf\` 
+
+lorem\\
+ipsum
+
+foo  
+bar
 
 \`\`\`ts
 const xx: string = 'yy'
