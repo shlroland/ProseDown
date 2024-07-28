@@ -33,7 +33,7 @@ export function Editor(props: {
 }) {
   const editor = useMemo(() => {
     const { editor, markdown } = createMarkdownEditor()
-    const doc = markdown.parseMarkdownText(markdownContent)
+    const doc = markdown.fromMarkdownText(markdownContent)
     editor.setContent(doc)
     return editor
   }, [])

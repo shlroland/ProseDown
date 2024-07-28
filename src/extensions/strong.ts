@@ -33,6 +33,6 @@ export const astStrongFrom = registerAstFrom<StrongExtension>()(
   (ctx, ast, text) => {
     const strongAction = ctx.editor.marks.strong
 
-    return ctx.processIndicatorContent(strongAction, ast, text)
+    return ctx.fromIndicatorContent(strongAction, ast, text)
   }
 )

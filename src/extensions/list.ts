@@ -58,7 +58,7 @@ export const astListFrom = registerAstFrom<ListExtension>()(
   "list",
   (ctx, ast, text) => {
     const { paragraph, orderedList, bulletList } = ctx.editor.nodes;
-    const childNodes = ctx.processParentContent(ast, text);
+    const childNodes = ctx.fromParentContent(ast, text);
     if (childNodes.length < 0) return [paragraph()];
     if (ast.ordered) {
       return orderedList({ order: ast.start! }, ...childNodes);

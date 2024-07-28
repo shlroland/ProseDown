@@ -24,7 +24,7 @@ type BlockquoteExtension = Extension<{
 export const astBlockquoteFrom = registerAstFrom<BlockquoteExtension>()(
   'blockquote',
   (ctx, ast, text) => {
-    const nodes = ctx.processParentContent(ast, text)
+    const nodes = ctx.fromParentContent(ast, text)
     const blockquote = ctx.editor.nodes.blockquote
     return blockquote(...nodes)
   }

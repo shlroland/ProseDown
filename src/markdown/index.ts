@@ -2,7 +2,7 @@ import { type Data, type Processor, unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
 import type { AstFromAction, AstToAction, RemarkPlugin } from './types'
-import { isArray, isFunction, isObjectType, values } from 'remeda'
+import { isArray, isFunction } from 'remeda'
 import type { ParentContent, PhrasingContent, Root, RootContent } from 'mdast'
 import type { DocExtension, Editor, MarkAction } from 'prosekit/core'
 import type { Mark, ProseMirrorNode } from 'prosekit/pm/model'
@@ -52,22 +52,22 @@ export class MarkdownProcessor<
     return this.#processor.data()
   }
 
-  parseMarkdownText(text: string) {
+  fromMarkdownText(text: string) {
     const root = this.processor.parse(text)
-    return this.processRoot(root, text)
+    return this.fromRoot(root, text)
   }
 
-  processRoot(root: Root, text: string) {
+  fromRoot(root: Root, text: string) {
     return (this.editor as Editor<DocExtension>).nodes.doc(
-      this.processParentContent(root, text)
+      this.fromParentContent(root, text)
     )
   }
 
-  processParentContent(content: ParentContent | Root, text: string) {
-    return this.processChildrenContent(content.children, text, content)
+  fromParentContent(content: ParentContent | Root, text: string) {
+    return this.fromChildrenContent(content.children, text, content)
   }
 
-  processChildrenContent(
+  fromChildrenContent(
     content: RootContent[],
     text: string,
     parent: RootContent | Root
@@ -85,11 +85,11 @@ export class MarkdownProcessor<
     return result
   }
 
-  processPhrasingContent(content: ParentContent, text: string, marks: Mark[]) {
+  fromPhrasingContent(content: ParentContent, text: string, marks: Mark[]) {
     const result: ProseMirrorNode[] = []
     content.children.forEach((child, index) => {
       if (isBasicContainer(child)) {
-        result.push(...this.processPhrasingContent(child, text, marks))
+        result.push(...this.fromPhrasingContent(child, text, marks))
         return
       }
 
@@ -105,7 +105,7 @@ export class MarkdownProcessor<
     return result
   }
 
-  processIndicatorContent(
+  fromIndicatorContent(
     markAction: RemoveNonCallable<MarkAction>,
     content: PhrasingContent,
     text: string
@@ -137,7 +137,7 @@ export class MarkdownProcessor<
     return markAction(
       ...[
         firstIndicator,
-        ...this.processPhrasingContent(content, text, []),
+        ...this.fromPhrasingContent(content, text, []),
         lastIndicator,
       ]
     )

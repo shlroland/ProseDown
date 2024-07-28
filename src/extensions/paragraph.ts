@@ -24,7 +24,7 @@ export function defineParagraphSpec(): ParagraphSpecExtension {
 export const astParagraphFrom = registerAstFrom<ParagraphExtension>()(
   'paragraph',
   (ctx, ast, text, _pos, marks) => {
-    const childNodes = ctx.processPhrasingContent(ast, text, marks)
+    const childNodes = ctx.fromPhrasingContent(ast, text, marks)
     return ctx.editor.nodes.paragraph(...childNodes)
   }
 )

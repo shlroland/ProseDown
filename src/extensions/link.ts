@@ -41,6 +41,6 @@ export const astLinkFrom = registerAstFrom<LinkSpecExtension>()(
   (ctx, ast, text) => {
     const link = (...children: NodeChild[]) =>
       ctx.editor.marks.link({ href: ast.url, title: ast.title ?? undefined }, ...children)
-    return ctx.processIndicatorContent(link, ast, text)
+    return ctx.fromIndicatorContent(link, ast, text)
   }
 )

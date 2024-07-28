@@ -46,7 +46,7 @@ export function defineListItem() {
 export const astListItemFrom = registerAstFrom<ListItemExtension>()(
   "listItem",
   (ctx, ast, text) => {
-    let nodes = ctx.processParentContent(ast, text);
+    let nodes = ctx.fromParentContent(ast, text);
     const listItem = ctx.editor.nodes.listItem;
     if (nodes.length <= 0) {
       nodes = [ctx.editor.nodes.paragraph()];

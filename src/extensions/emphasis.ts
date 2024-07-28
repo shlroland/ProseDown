@@ -25,6 +25,6 @@ export const astEmphasisFrom = registerAstFrom<EmphasisExtension>()(
   'emphasis',
   (ctx, ast, text) => {
     const strongAction = ctx.editor.marks.emphasis
-    return ctx.processIndicatorContent(strongAction, ast, text)
+    return ctx.fromIndicatorContent(strongAction, ast, text)
   }
 )
