@@ -1,6 +1,6 @@
 import { defineNodeSpec, type Extension } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
-import { registerAstFrom } from '../markdown/methods'
+import { registerAstFrom, registerDecorationsAction } from '../markdown/methods'
 
 function defineBreakSpec() {
   return defineNodeSpec({
@@ -38,5 +38,10 @@ export const astBreakFrom = registerAstFrom<BreakExtension>()(
   (ctx) => {
     const breakAction = ctx.editor.nodes.break
     return breakAction()
-  }
+  },
+)
+
+export const decorationBreak = registerDecorationsAction(
+  'break',
+  () => [],
 )

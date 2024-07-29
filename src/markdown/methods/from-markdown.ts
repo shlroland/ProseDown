@@ -2,7 +2,7 @@ import type { ParentContent, PhrasingContent, Root, RootContent } from 'mdast'
 import type { MarkdownProcessor } from '..'
 import type { Mark, ProseMirrorNode } from 'prosekit/pm/model'
 import type { Editor, MarkAction } from 'prosekit/core'
-import { isBasicContainer, isParentContent } from '../utils'
+import { isBasicContainerAst, isParentContent } from '../utils'
 import type { RemoveNonCallable } from '../../utils/type'
 import { isArray } from '../../utils/is'
 import type { DocExtension } from '../../extensions/doc'
@@ -52,7 +52,7 @@ export function fromPhrasingContent(
 ) {
   const result: ProseMirrorNode[] = []
   content.children.forEach((child, index) => {
-    if (isBasicContainer(child)) {
+    if (isBasicContainerAst(child)) {
       result.push(...fromPhrasingContent(ctx, child, text, marks))
       return
     }

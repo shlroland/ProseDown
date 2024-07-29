@@ -1,7 +1,8 @@
 import { defineMarkSpec, type Extension } from 'prosekit/core'
-import { registerAstFrom } from '../markdown/methods'
+import { registerAstFrom, registerDecorationsAction } from '../markdown/methods'
 import type { Attrs } from 'prosekit/pm/model'
 import { isString } from '../utils/is'
+import { createIndicatorDecorations } from '../markdown/sync'
 
 export function defineStrong() {
   return defineMarkSpec({
@@ -13,7 +14,9 @@ export function defineStrong() {
       {
         style: 'font-weight',
         getAttrs: (node) =>
-          isString(node) && /^(bold(er)?|[5-9]\d{2,})$/.test(node) ? null : false,
+          isString(node) && /^(bold(er)?|[5-9]\d{2,})$/.test(node)
+            ? null
+            : false,
       },
     ],
     toDOM: () => {
@@ -23,9 +26,9 @@ export function defineStrong() {
 }
 
 type StrongExtension = Extension<{
-    Marks: {
-        strong: Attrs;
-    };
+  Marks: {
+    strong: Attrs
+  }
 }>
 
 export const astStrongFrom = registerAstFrom<StrongExtension>()(
@@ -34,5 +37,11 @@ export const astStrongFrom = registerAstFrom<StrongExtension>()(
     const strongAction = ctx.editor.marks.strong
 
     return ctx.fromIndicatorContent(strongAction, ast, text)
-  }
+  },
+)
+
+export const decorationStrong = registerDecorationsAction(
+  'strong',
+  (pos, node, info, actionMap) =>
+    createIndicatorDecorations(pos, node, info, actionMap),
 )

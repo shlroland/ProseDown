@@ -8,6 +8,9 @@ import { createMarkdownEditor } from './create-editor'
 const markdownContent = `
 ## 4444
 
+asdfa***sd***f
+asdfaz\`xcvx\`zio
+
 > asdfsdf**bb**
 > asdfa\`asdfasf\`
 

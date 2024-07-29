@@ -1,6 +1,7 @@
 import { defineMarkSpec, type Extension } from 'prosekit/core'
-import { registerAstFrom } from '../markdown/methods'
+import { registerAstFrom, registerDecorationsAction } from '../markdown/methods'
 import type { Attrs } from 'prosekit/pm/model'
+import { calcNodePosition, createMarkDecoration } from '../markdown/sync'
 
 export function defineInlineCode() {
   return defineMarkSpec({
@@ -15,9 +16,9 @@ export function defineInlineCode() {
 }
 
 type InlineCodeExtension = Extension<{
-    Marks: {
-        inlineCode: Attrs;
-    };
+  Marks: {
+    inlineCode: Attrs
+  }
 }>
 
 export const astInlineCodeFrom = registerAstFrom<InlineCodeExtension>()(
@@ -27,5 +28,16 @@ export const astInlineCodeFrom = registerAstFrom<InlineCodeExtension>()(
     const firstIndicator = ctx.createTextNode('`')
     const lastIndicator = ctx.createTextNode('`')
     return ctx.editor.marks.inlineCode([firstIndicator, value, lastIndicator])
-  }
+  },
+)
+
+export const decorationInlineCode = registerDecorationsAction(
+  'inlineCode',
+  (pos, node, info) => {
+    const [nodeStartPos, nodeEndPos] = calcNodePosition(pos, node)
+    return [
+      createMarkDecoration(nodeStartPos, nodeStartPos + 1, info.isInRange),
+      createMarkDecoration(nodeEndPos - 1, nodeEndPos, info.isInRange),
+    ]
+  },
 )

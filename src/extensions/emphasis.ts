@@ -1,6 +1,7 @@
 import { defineMarkSpec, type Extension } from 'prosekit/core'
-import { registerAstFrom } from '../markdown/methods'
+import { registerAstFrom, registerDecorationsAction } from '../markdown/methods'
 import type { Attrs } from 'prosekit/pm/model'
+import { createIndicatorDecorations } from '../markdown/sync'
 
 export function defineEmphasis() {
   return defineMarkSpec({
@@ -9,7 +10,10 @@ export function defineEmphasis() {
     parseDOM: [
       { tag: 'i' },
       { tag: 'em' },
-      { style: 'font-style', getAttrs: (value) => (value === 'italic') as false },
+      {
+        style: 'font-style',
+        getAttrs: (value) => (value === 'italic') as false,
+      },
     ],
     toDOM: () => ['em', 0],
   })
@@ -26,5 +30,11 @@ export const astEmphasisFrom = registerAstFrom<EmphasisExtension>()(
   (ctx, ast, text) => {
     const strongAction = ctx.editor.marks.emphasis
     return ctx.fromIndicatorContent(strongAction, ast, text)
-  }
+  },
+)
+
+export const decorationEmphasis = registerDecorationsAction(
+  'emphasis',
+  (pos, node, info, actionMap) =>
+    createIndicatorDecorations(pos, node, info, actionMap),
 )

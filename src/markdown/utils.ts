@@ -1,11 +1,17 @@
-import type { Node, Paragraph, ParentContent, RootContent } from 'mdast'
+import type { Node, Nodes, Paragraph, ParentContent, RootContent } from 'mdast'
 import type { ProseMirrorNode } from 'prosekit/pm/model'
 import { isArray } from '../utils/is'
+import type { EditorView } from 'prosekit/pm/view'
+import type { Selection } from 'prosekit/pm/state'
 
 export const basicContainers = ['paragraph']
 
-export const isBasicContainer = (node: Node): node is Paragraph => {
+export const isBasicContainerAst = (node: Node): node is Paragraph => {
   return basicContainers.includes(node.type)
+}
+
+export const isBasicContainerPM = (node: ProseMirrorNode) => {
+  return basicContainers.includes(node.type.name)
 }
 
 export const isParentContent = (node: Node): node is ParentContent => {
@@ -66,4 +72,43 @@ export function concatChildren(children: RootContent[]) {
     result[i] = extractTextContent(content)
   }
   return result.join('')
+}
+
+export function adjustPosition(node: Nodes, offset: number) {
+  if (offset !== 0 && node.position) {
+    if (node.type !== 'root') {
+      node.position.start.column += offset
+
+      if (typeof node.position.start.offset === 'number') {
+        node.position.start.offset += offset
+      }
+    }
+
+    node.position.end.column += offset
+
+    if (typeof node.position.end.offset === 'number') {
+      node.position.end.offset += offset
+    }
+  }
+}
+
+export function isInSelectionRange(sel: Selection, start: number, end: number) {
+  return (
+    (start <= sel.from && sel.from <= end) || (start <= sel.to && sel.to <= end)
+  )
+}
+
+export function isContenteditbaleFalse(_el: HTMLElement, view: EditorView) {
+  let el = _el
+  for (;;) {
+    if (el.getAttribute('contentEditable') === 'false') {
+      return true
+    }
+
+    if (!el.parentElement || el === view.dom) {
+      return false
+    }
+
+    el = el.parentElement
+  }
 }

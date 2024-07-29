@@ -1,5 +1,6 @@
 import { defineMarkSpec, type Extension, type NodeChild } from 'prosekit/core'
-import { registerAstFrom } from '../markdown/methods'
+import { registerAstFrom, registerDecorationsAction } from '../markdown/methods'
+import { createIndicatorDecorations } from '../markdown/sync'
 
 type LinkSpecExtension = Extension<{
   Marks: {
@@ -40,7 +41,17 @@ export const astLinkFrom = registerAstFrom<LinkSpecExtension>()(
   'link',
   (ctx, ast, text) => {
     const link = (...children: NodeChild[]) =>
-      ctx.editor.marks.link({ href: ast.url, title: ast.title ?? undefined }, ...children)
+      ctx.editor.marks.link(
+        { href: ast.url, title: ast.title ?? undefined },
+        ...children,
+      )
     return ctx.fromIndicatorContent(link, ast, text)
-  }
+  },
+)
+
+export const decorationLink = registerDecorationsAction(
+  'link',
+
+  (pos, node, info, actionMap) =>
+    createIndicatorDecorations(pos, node, info, actionMap),
 )

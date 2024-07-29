@@ -1,25 +1,38 @@
 import { defineBasicExtension } from 'prosekit/basic'
 import { defineDoc } from './doc'
 import { astTextFrom, defineText } from './text'
-import { astStrongFrom, defineStrong } from './strong'
-import { astInlineCodeFrom, defineInlineCode } from './inline-code'
+import { astStrongFrom, decorationStrong, defineStrong } from './strong'
+import {
+  astInlineCodeFrom,
+  decorationInlineCode,
+  defineInlineCode,
+} from './inline-code'
 import {
   astParagraphFrom,
   astParagraphTo,
   defineParagraph,
   stringToMarkdownPlugin,
 } from './paragraph'
-import { union } from 'prosekit/core'
-import { astEmphasisFrom, defineEmphasis } from './emphasis'
+import { defineHistory, union } from 'prosekit/core'
+import { astEmphasisFrom, decorationEmphasis, defineEmphasis } from './emphasis'
 import { astHeadingFrom, astHeadingTo, defineHeading } from './heading'
 import { defineBlockquote } from 'prosekit/extensions/blockquote'
 import { astBlockquoteFrom, astBlockquoteTo } from './blockquote'
-import { astLinkFrom, defineLink } from './link'
-import { astBulletListTo, astListFrom, astOrderedListTo, defineList } from './list'
+import { astLinkFrom, decorationLink, defineLink } from './link'
+import {
+  astBulletListTo,
+  astListFrom,
+  astOrderedListTo,
+  defineList,
+} from './list'
 import { astListItemFrom, astListItemTo, defineListItem } from './list-item'
 import { astCodeFrom, astCodeTo, defineCode } from './code'
-import { astBreakFrom, defineBreak } from './break'
-import { astThematicBreakFrom, astThematicBreakTo, defineThematicBreak } from './thematic-break'
+import { astBreakFrom, decorationBreak, defineBreak } from './break'
+import {
+  astThematicBreakFrom,
+  astThematicBreakTo,
+  defineThematicBreak,
+} from './thematic-break'
 
 export function defineBasicDemoExtension() {
   return defineBasicExtension()
@@ -43,6 +56,7 @@ export function defineExtension() {
     defineCode(),
     defineBreak(),
     defineThematicBreak(),
+    defineHistory(),
   ])
 }
 
@@ -73,10 +87,20 @@ export function defineAstTo() {
     astBulletListTo(),
     astOrderedListTo(),
     astListItemTo(),
-    astThematicBreakTo()
+    astThematicBreakTo(),
   ]
 }
 
 export function defineRemarkPlugins() {
-  return [stringToMarkdownPlugin]
+  return [stringToMarkdownPlugin()]
+}
+
+export function defineDecorationActions() {
+  return [
+    decorationBreak(),
+    decorationEmphasis(),
+    decorationInlineCode(),
+    decorationLink(),
+    decorationStrong(),
+  ]
 }
