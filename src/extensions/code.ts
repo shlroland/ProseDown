@@ -1,6 +1,6 @@
 import { defineNodeSpec, type Extension } from 'prosekit/core'
-import { isString } from 'remeda'
 import { registerAstFrom, registerAstTo } from '../markdown/methods'
+import { isString } from '../utils/is'
 
 export function defineCodeSpec() {
   return defineNodeSpec({

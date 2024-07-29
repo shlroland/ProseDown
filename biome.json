@@ -14,7 +14,8 @@
       "complexity": {
         "noForEach": "off"
       }
-    }
+    },
+    "ignore": ["./src/utils/type.ts"]
   },
   "formatter": {
     "indentStyle": "space"

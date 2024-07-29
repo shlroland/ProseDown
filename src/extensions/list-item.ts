@@ -1,8 +1,8 @@
 import { defineNodeSpec, type Extension } from 'prosekit/core'
-import { isString } from 'remeda'
 import { registerAstFrom, registerAstTo } from '../markdown/methods'
 import type { Attrs } from 'prosekit/pm/model'
 import type { BlockContent, DefinitionContent } from 'mdast'
+import { isString } from '../utils/is'
 
 export function defineListItemSpec() {
   return defineNodeSpec({

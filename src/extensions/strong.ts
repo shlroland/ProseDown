@@ -1,7 +1,7 @@
 import { defineMarkSpec, type Extension } from 'prosekit/core'
-import { isString } from 'remeda'
 import { registerAstFrom } from '../markdown/methods'
 import type { Attrs } from 'prosekit/pm/model'
+import { isString } from '../utils/is'
 
 export function defineStrong() {
   return defineMarkSpec({

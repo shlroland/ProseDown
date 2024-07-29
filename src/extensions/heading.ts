@@ -1,6 +1,7 @@
 import { defineNodeSpec, type Extension } from 'prosekit/core'
 import { registerAstFrom, registerAstTo } from '../markdown/methods'
 import type { Heading } from 'mdast'
+import { extractTextContent } from '../markdown/utils'
 
 type HeadingSpecExtension = Extension<{
   Nodes: {
@@ -38,7 +39,7 @@ export function defineHeading() {
 export const astHeadingFrom = registerAstFrom<HeadingSpecExtension>()(
   'heading',
   (ctx, ast) => {
-    const headingText = ctx.extractTextContent(ast)
+    const headingText = extractTextContent(ast)
     const headingTextNode = ctx.createTextNode(headingText)
     const heading = ctx.editor.nodes.heading
     return heading({ level: ast.depth }, headingTextNode)
@@ -47,7 +48,7 @@ export const astHeadingFrom = registerAstFrom<HeadingSpecExtension>()(
 
 export const astHeadingTo = registerAstTo('heading', (ctx, node, prevNode) => {
   const paragraph = ctx.astTo.get('paragraph')
-  if (!paragraph) throw new Error('must have a `astTo` method for `paragragph`')
+  if (!paragraph) throw new Error('must have a `astTo` method for `paragraph`')
   const result = paragraph(ctx, node, prevNode) as Heading
   result.type = 'heading'
   result.depth = node.attrs.level
