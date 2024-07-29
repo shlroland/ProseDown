@@ -1,6 +1,8 @@
 import type { Nodes, RootContentMap, RootContentNames } from 'mdast'
-import type { Decoration } from 'prosekit/pm/view'
+import type { Decoration, DecorationSet } from 'prosekit/pm/view'
 import type { Selection } from 'prosekit/pm/state'
+import type { ProseMirrorNode } from 'prosekit/pm/model'
+import type { SelectionTracker } from './selection'
 
 export type CachedMap = Map<string, Nodes>
 
@@ -22,3 +24,19 @@ export interface DecorationSpec {
   reset?: (deco: Decoration, inRange: boolean) => Decoration
   inRange?: boolean
 }
+
+export type ReplaceResult = Map<
+  number,
+  { ast?: Nodes; newNode?: ProseMirrorNode }
+>
+
+export interface StatusResult {
+  replace: ReplaceResult
+  resetCursorRanges: SelectionTracker
+}
+
+export interface MarkdownSyncState {
+  decorations: DecorationSet
+}
+
+export type StatusCachedMap = Map<string, [Nodes, ProseMirrorNode[]]>

@@ -46,7 +46,7 @@ export function fromChildrenContent(
 
 export function fromPhrasingContent(
   ctx: MarkdownProcessor<Editor>,
-  content: ParentContent,
+  content: ParentContent | Root,
   text: string,
   marks: Mark[],
 ) {

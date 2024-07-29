@@ -14,6 +14,11 @@ export const isBasicContainerPM = (node: ProseMirrorNode) => {
   return basicContainers.includes(node.type.name)
 }
 
+export function shouldContainerSync(node: ProseMirrorNode) {
+  return isBasicContainerPM(node) && node.nodeSize <= 1e4
+}
+
+
 export const isParentContent = (node: Node): node is ParentContent => {
   return 'children' in node
 }
@@ -112,3 +117,10 @@ export function isContenteditbaleFalse(_el: HTMLElement, view: EditorView) {
     el = el.parentElement
   }
 }
+
+export const BooleanT =
+  <T>() =>
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
+  (a: T | '' | 0 | 0n | false | null | undefined | void): a is T => {
+    return Boolean(a)
+  }

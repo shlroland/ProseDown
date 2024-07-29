@@ -1,12 +1,19 @@
 import type { Nodes } from 'mdast'
-import { adjustPosition, isBasicContainerAst, isInSelectionRange, isParentContent } from '../utils'
+import {
+  adjustPosition,
+  BooleanT,
+  isBasicContainerAst,
+  isInSelectionRange,
+  isParentContent,
+} from '../utils'
 import { visit } from 'unist-util-visit'
-import { Decoration } from 'prosekit/pm/view'
+import { Decoration, type DecorationSet } from 'prosekit/pm/view'
 import type {
   CreateDecorationsAction,
   DecorationInfo,
   DecorationSpec,
 } from './types'
+import type { ProseMirrorNode } from 'prosekit/pm/model'
 
 export function applyOffset(ast: Nodes) {
   let offset = 0
@@ -126,4 +133,17 @@ export function createIndicatorDecorations(
       info.isInRange,
     ),
   ]
+}
+
+export function clearCurrentDecorations(doc: ProseMirrorNode, decoSet: DecorationSet) {
+  const inRangeDecorations = decoSet.find(
+    undefined,
+    undefined,
+    (decoSpec: DecorationSpec) => !!(decoSpec.reset && decoSpec.inRange),
+  )
+  const resetDecorations = inRangeDecorations
+    .map((deco) => deco.spec.reset(deco, false))
+    .filter(BooleanT())
+
+  return decoSet.remove(inRangeDecorations).add(doc, resetDecorations)
 }
