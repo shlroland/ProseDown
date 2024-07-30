@@ -33,6 +33,12 @@ import {
   astThematicBreakTo,
   defineThematicBreak,
 } from './thematic-break'
+import {
+  astHighlightFrom,
+  decorationHighlight,
+  defineHighlight,
+  highlightRemark,
+} from './highlight'
 
 export function defineBasicDemoExtension() {
   return defineBasicExtension()
@@ -56,6 +62,7 @@ export function defineExtension() {
     defineCode(),
     defineBreak(),
     defineThematicBreak(),
+    defineHighlight(),
     defineHistory(),
   ])
 }
@@ -75,6 +82,7 @@ export function defineAstFrom() {
     astCodeFrom(),
     astBreakFrom(),
     astThematicBreakFrom(),
+    astHighlightFrom(),
   ] as const
 }
 
@@ -92,7 +100,7 @@ export function defineAstTo() {
 }
 
 export function defineRemarkPlugins() {
-  return [stringToMarkdownPlugin()]
+  return [stringToMarkdownPlugin(), highlightRemark()]
 }
 
 export function defineDecorationActions() {
@@ -102,5 +110,6 @@ export function defineDecorationActions() {
     decorationInlineCode(),
     decorationLink(),
     decorationStrong(),
+    decorationHighlight(),
   ]
 }
