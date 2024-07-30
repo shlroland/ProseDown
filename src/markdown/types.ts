@@ -13,18 +13,18 @@ export type RemarkPlugin =
 export type AstFromAction<
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   T extends RootContentNames = any,
-  E extends Editor = Editor
+  E extends Editor = Editor,
 > = (
   ctx: MarkdownProcessor<E>,
   ast: RootContentMap[T],
   text: string,
   pos: number,
   marks: Mark[],
-  parent?: RootContent | Root
+  parent?: RootContent | Root,
 ) => ProseMirrorNode | ProseMirrorNode[] | null | undefined
 
 export type AstToAction<E extends Editor = Editor> = (
   ctx: MarkdownProcessor<E>,
   curNode: ProseMirrorNode,
-  prevNode: RootContent | undefined
+  prevNode: RootContent | undefined,
 ) => RootContent

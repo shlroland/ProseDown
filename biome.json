@@ -15,12 +15,20 @@
         "noForEach": "off"
       }
     },
-    "ignore": ["./src/utils/type.ts"]
+    "ignore": ["./src/utils/type.ts", "./*.config.ts"]
   },
   "formatter": {
     "indentStyle": "space"
   },
   "javascript": {
     "formatter": { "semicolons": "asNeeded", "quoteStyle": "single" }
+  },
+  "files": {
+    "ignore": ["tsconfig.*.json"]
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
   }
 }

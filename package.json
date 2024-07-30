@@ -11,11 +11,12 @@
   },
   "dependencies": {
     "just-curry-it": "^5.3.0",
-    "prosekit": "^0.9.13",
+    "lefthook": "^1.7.11",
+    "prosekit": "^0.9.14",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remark-gfm": "^4.0.0",
-    "remark-highlight-mark": "^1.1.0",
+    "remark-highlight-mark": "^1.2.1",
     "remark-math": "^6.0.0",
     "remark-parse": "^11.0.0",
     "remark-stringify": "^11.0.0",
@@ -28,11 +29,11 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/unist": "^3.0.2",
-    "@unocss/reset": "^0.61.6",
+    "@unocss/reset": "^0.61.7",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "type-fest": "^4.23.0",
     "typescript": "^5.5.4",
-    "unocss": "^0.61.6",
+    "unocss": "^0.61.7",
     "vite": "^5.3.5"
   }
 }
