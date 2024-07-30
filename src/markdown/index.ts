@@ -1,12 +1,11 @@
-import { type Processor, unified } from 'unified'
-import remarkParse from 'remark-parse'
-import remarkStringify from 'remark-stringify'
-import type { AstFromAction, AstToAction, RemarkPlugin } from './types'
+import curry from 'just-curry-it'
 import type { Root } from 'mdast'
 import type { Editor } from 'prosekit/core'
 import type { ProseMirrorNode } from 'prosekit/pm/model'
+import remarkParse from 'remark-parse'
+import remarkStringify from 'remark-stringify'
+import { type Processor, unified } from 'unified'
 import type { ExtractFirst } from '../utils/type'
-import curry from 'just-curry-it'
 import {
   createTextNode,
   fromChildrenContent,
@@ -14,8 +13,9 @@ import {
   fromParentContent,
   fromPhrasingContent,
   fromRoot,
-  toMarkdownAst
+  toMarkdownAst,
 } from './methods'
+import type { AstFromAction, AstToAction, RemarkPlugin } from './types'
 
 export class MarkdownProcessor<
   E extends Editor,

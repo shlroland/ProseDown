@@ -1,23 +1,23 @@
 import { defineBasicExtension } from 'prosekit/basic'
+import { defineHistory, union } from 'prosekit/core'
+import { defineBlockquote } from 'prosekit/extensions/blockquote'
+import { astBlockquoteFrom, astBlockquoteTo } from './blockquote'
+import { astBreakFrom, decorationBreak, defineBreak } from './break'
+import { astCodeFrom, astCodeTo, defineCode } from './code'
 import { defineDoc } from './doc'
-import { astTextFrom, defineText } from './text'
-import { astStrongFrom, decorationStrong, defineStrong } from './strong'
+import { astEmphasisFrom, decorationEmphasis, defineEmphasis } from './emphasis'
+import { astHeadingFrom, astHeadingTo, defineHeading } from './heading'
+import {
+  astHighlightFrom,
+  decorationHighlight,
+  defineHighlight,
+  highlightRemark,
+} from './highlight'
 import {
   astInlineCodeFrom,
   decorationInlineCode,
   defineInlineCode,
 } from './inline-code'
-import {
-  astParagraphFrom,
-  astParagraphTo,
-  defineParagraph,
-  stringToMarkdownPlugin,
-} from './paragraph'
-import { defineHistory, union } from 'prosekit/core'
-import { astEmphasisFrom, decorationEmphasis, defineEmphasis } from './emphasis'
-import { astHeadingFrom, astHeadingTo, defineHeading } from './heading'
-import { defineBlockquote } from 'prosekit/extensions/blockquote'
-import { astBlockquoteFrom, astBlockquoteTo } from './blockquote'
 import { astLinkFrom, decorationLink, defineLink } from './link'
 import {
   astBulletListTo,
@@ -26,19 +26,19 @@ import {
   defineList,
 } from './list'
 import { astListItemFrom, astListItemTo, defineListItem } from './list-item'
-import { astCodeFrom, astCodeTo, defineCode } from './code'
-import { astBreakFrom, decorationBreak, defineBreak } from './break'
+import {
+  astParagraphFrom,
+  astParagraphTo,
+  defineParagraph,
+  stringToMarkdownPlugin,
+} from './paragraph'
+import { astStrongFrom, decorationStrong, defineStrong } from './strong'
+import { astTextFrom, defineText } from './text'
 import {
   astThematicBreakFrom,
   astThematicBreakTo,
   defineThematicBreak,
 } from './thematic-break'
-import {
-  astHighlightFrom,
-  decorationHighlight,
-  defineHighlight,
-  highlightRemark,
-} from './highlight'
 
 export function defineBasicDemoExtension() {
   return defineBasicExtension()

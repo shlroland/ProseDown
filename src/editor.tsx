@@ -1,4 +1,4 @@
-import { jsonFromNode, type NodeJSON } from 'prosekit/core'
+import { type NodeJSON, jsonFromNode } from 'prosekit/core'
 import type { ProseMirrorNode } from 'prosekit/pm/model'
 import { ProseKit, useDocChange } from 'prosekit/react'
 import { useCallback, useMemo } from 'react'
@@ -41,7 +41,7 @@ export function Editor(props: {
 
   const handleDocChange = useCallback(
     (doc: ProseMirrorNode) => props.onDocUpdate?.(jsonFromNode(doc)),
-    [props.onDocUpdate]
+    [props.onDocUpdate],
   )
   useDocChange(handleDocChange, { editor })
 

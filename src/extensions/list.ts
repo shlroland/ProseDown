@@ -1,7 +1,7 @@
-import { defineNodeSpec, union, type Extension } from 'prosekit/core'
+import type { ListItem } from 'mdast'
+import { type Extension, defineNodeSpec, union } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
 import { registerAstFrom, registerAstTo } from '../markdown/methods'
-import type { ListItem } from 'mdast'
 
 export function defineBulletListSpec() {
   return defineNodeSpec({
@@ -65,7 +65,7 @@ export const astListFrom = registerAstFrom<ListExtension>()(
       return orderedList({ order: ast.start! }, ...childNodes)
     }
     return bulletList(...childNodes)
-  }
+  },
 )
 
 export const astBulletListTo = registerAstTo('bulletList', (ctx, node) => {

@@ -1,9 +1,13 @@
-import { defineMarkSpec, type Extension } from 'prosekit/core'
+import { type Extension, defineMarkSpec } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
-import { registerAstFrom, registerDecorationsAction, registerRemarkPlugin } from '../markdown/methods'
 import { remarkHighlightMark } from 'remark-highlight-mark'
-import type { RemarkPlugin } from '../markdown/types'
+import {
+  registerAstFrom,
+  registerDecorationsAction,
+  registerRemarkPlugin,
+} from '../markdown/methods'
 import { createIndicatorDecorations } from '../markdown/sync'
+import type { RemarkPlugin } from '../markdown/types'
 
 export function defineHighlight() {
   return defineMarkSpec({
@@ -37,8 +41,7 @@ export const astHighlightFrom = registerAstFrom<HighlightExtension>()(
 )
 
 export const decorationHighlight = registerDecorationsAction(
-    'highlight',
-    (pos, node, info, actionMap) =>
-      createIndicatorDecorations(pos, node, info, actionMap),
-  )
-  
+  'highlight',
+  (pos, node, info, actionMap) =>
+    createIndicatorDecorations(pos, node, info, actionMap),
+)

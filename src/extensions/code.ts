@@ -1,4 +1,4 @@
-import { defineNodeSpec, type Extension } from 'prosekit/core'
+import { type Extension, defineNodeSpec } from 'prosekit/core'
 import { registerAstFrom, registerAstTo } from '../markdown/methods'
 import { isString } from '../utils/is'
 
@@ -55,7 +55,7 @@ export const astCodeFrom = registerAstFrom<CodeExtension>()(
   (ctx, ast) => {
     const codeText = ast.value
     return ctx.editor.nodes.code({ lang: ast.lang, meta: ast.meta }, codeText)
-  }
+  },
 )
 
 export const astCodeTo = registerAstTo('code', (_ctx, node) => {

@@ -1,8 +1,8 @@
-import type { PluggableList, Plugin, Preset } from 'unified'
-import type { Mark, ProseMirrorNode } from 'prosekit/pm/model'
+import type { Root, RootContent, RootContentMap, RootContentNames } from 'mdast'
 import type { Editor } from 'prosekit/core'
+import type { Mark, ProseMirrorNode } from 'prosekit/pm/model'
+import type { PluggableList, Plugin, Preset } from 'unified'
 import type { MarkdownProcessor } from '.'
-import type { RootContentMap, RootContent, RootContentNames, Root } from 'mdast'
 export type { RootContent } from 'mdast'
 
 export type RemarkPlugin =

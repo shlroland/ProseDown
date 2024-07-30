@@ -1,7 +1,7 @@
 import type { RootContent } from 'mdast'
+import type { Editor } from 'prosekit/core'
 import type { ProseMirrorNode } from 'prosekit/pm/model'
 import type { MarkdownProcessor } from '..'
-import type { Editor } from 'prosekit/core'
 
 export function toMarkdownAst(
   ctx: MarkdownProcessor<Editor>,

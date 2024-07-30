@@ -1,10 +1,10 @@
 import { createEditor } from 'prosekit/core'
 import {
-  defineExtension,
   defineAstFrom,
   defineAstTo,
-  defineRemarkPlugins,
   defineDecorationActions,
+  defineExtension,
+  defineRemarkPlugins,
 } from './extensions'
 import { MarkdownProcessor } from './markdown'
 import { defineMarkdownSync } from './markdown/sync'

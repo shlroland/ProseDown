@@ -1,7 +1,7 @@
-import { defineNodeSpec, type Extension } from 'prosekit/core'
-import { registerAstFrom, registerAstTo } from '../markdown/methods'
-import type { Attrs } from 'prosekit/pm/model'
 import type { BlockContent, DefinitionContent } from 'mdast'
+import { type Extension, defineNodeSpec } from 'prosekit/core'
+import type { Attrs } from 'prosekit/pm/model'
+import { registerAstFrom, registerAstTo } from '../markdown/methods'
 import { isString } from '../utils/is'
 
 export function defineListItemSpec() {
@@ -53,7 +53,7 @@ export const astListItemFrom = registerAstFrom<ListItemExtension>()(
       nodes = [ctx.editor.nodes.paragraph()]
     }
     return listItem(...nodes)
-  }
+  },
 )
 
 export const astListItemTo = registerAstTo('listItem', (ctx, node) => {

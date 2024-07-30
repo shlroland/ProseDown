@@ -1,6 +1,6 @@
-import { defineNodeSpec, type Extension } from 'prosekit/core'
-import { registerAstFrom } from '../markdown/methods'
+import { type Extension, defineNodeSpec } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
+import { registerAstFrom } from '../markdown/methods'
 
 export function defineText() {
   return defineNodeSpec({
@@ -15,6 +15,9 @@ export type TextExtension = Extension<{
   }
 }>
 
-export const astTextFrom = registerAstFrom<TextExtension>()('text', (ctx, ast) => {
-  return ctx.createTextNode(ast.value)
-})
+export const astTextFrom = registerAstFrom<TextExtension>()(
+  'text',
+  (ctx, ast) => {
+    return ctx.createTextNode(ast.value)
+  },
+)

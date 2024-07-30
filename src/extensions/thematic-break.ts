@@ -1,4 +1,4 @@
-import { defineNodeSpec, type Extension } from 'prosekit/core'
+import { type Extension, defineNodeSpec } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
 import { registerAstFrom, registerAstTo } from '../markdown/methods'
 
@@ -24,7 +24,7 @@ export const astThematicBreakFrom = registerAstFrom<ThematicBreakExtension>()(
   'thematicBreak',
   (ctx) => {
     return ctx.editor.nodes.thematicBreak()
-  }
+  },
 )
 
 export const astThematicBreakTo = registerAstTo('thematicBreak', () => ({

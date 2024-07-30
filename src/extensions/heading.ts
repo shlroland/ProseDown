@@ -1,6 +1,6 @@
-import { defineNodeSpec, type Extension } from 'prosekit/core'
-import { registerAstFrom, registerAstTo } from '../markdown/methods'
 import type { Heading } from 'mdast'
+import { type Extension, defineNodeSpec } from 'prosekit/core'
+import { registerAstFrom, registerAstTo } from '../markdown/methods'
 import { extractTextContent } from '../markdown/utils'
 
 type HeadingSpecExtension = Extension<{
@@ -43,7 +43,7 @@ export const astHeadingFrom = registerAstFrom<HeadingSpecExtension>()(
     const headingTextNode = ctx.createTextNode(headingText)
     const heading = ctx.editor.nodes.heading
     return heading({ level: ast.depth }, headingTextNode)
-  }
+  },
 )
 
 export const astHeadingTo = registerAstTo('heading', (ctx, node, prevNode) => {

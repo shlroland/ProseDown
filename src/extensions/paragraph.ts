@@ -1,16 +1,16 @@
 import {
-  defineNodeSpec,
   type Extension,
   type ParagraphExtension,
+  defineNodeSpec,
 } from 'prosekit/core'
 export { defineParagraph } from 'prosekit/core'
+import type { StringContent } from 'mdast'
+import type { Attrs } from 'prosekit/pm/model'
 import {
   registerAstFrom,
   registerAstTo,
   registerRemarkPlugin,
 } from '../markdown/methods'
-import type { Attrs } from 'prosekit/pm/model'
-import type { StringContent } from 'mdast'
 import { sanitizerText } from '../markdown/utils'
 
 type ParagraphSpecExtension = Extension<{
@@ -53,7 +53,7 @@ export const astParagraphFrom = registerAstFrom<ParagraphExtension>()(
   (ctx, ast, text, _pos, marks) => {
     const childNodes = ctx.fromPhrasingContent(ast, text, marks)
     return ctx.editor.nodes.paragraph(...childNodes)
-  }
+  },
 )
 
 export const astParagraphTo = registerAstTo('paragraph', (_ctx, node) => {

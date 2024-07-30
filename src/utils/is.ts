@@ -1,4 +1,4 @@
-import type { DefinitelyFunction, NarrowedTo,  } from './type'
+import type { DefinitelyFunction, NarrowedTo } from './type'
 
 export function isArray<T>(
   data: ArrayLike<unknown> | T,

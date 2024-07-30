@@ -1,7 +1,7 @@
 import type { Nodes, RootContentMap, RootContentNames } from 'mdast'
-import type { Decoration, DecorationSet } from 'prosekit/pm/view'
-import type { Selection } from 'prosekit/pm/state'
 import type { ProseMirrorNode } from 'prosekit/pm/model'
+import type { Selection } from 'prosekit/pm/state'
+import type { Decoration, DecorationSet } from 'prosekit/pm/view'
 import type { SelectionTracker } from './selection'
 
 export type CachedMap = Map<string, Nodes>

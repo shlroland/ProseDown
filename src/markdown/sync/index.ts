@@ -1,7 +1,7 @@
-import { definePlugin, type Editor } from 'prosekit/core'
+import { type Editor, definePlugin } from 'prosekit/core'
 import { Plugin } from 'prosekit/pm/state'
-import { MarkdownSyncSpec } from './plugin'
 import type { MarkdownProcessor } from '..'
+import { MarkdownSyncSpec } from './plugin'
 import type { CreateDecorationsAction } from './types'
 
 export {

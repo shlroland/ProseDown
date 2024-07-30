@@ -1,8 +1,8 @@
 import type { Node, Nodes, Paragraph, ParentContent, RootContent } from 'mdast'
 import type { ProseMirrorNode } from 'prosekit/pm/model'
-import { isArray } from '../utils/is'
-import type { EditorView } from 'prosekit/pm/view'
 import type { Selection } from 'prosekit/pm/state'
+import type { EditorView } from 'prosekit/pm/view'
+import { isArray } from '../utils/is'
 
 export const basicContainers = ['paragraph']
 
@@ -17,7 +17,6 @@ export const isBasicContainerPM = (node: ProseMirrorNode) => {
 export function shouldContainerSync(node: ProseMirrorNode) {
   return isBasicContainerPM(node) && node.nodeSize <= 1e4
 }
-
 
 export const isParentContent = (node: Node): node is ParentContent => {
   return 'children' in node

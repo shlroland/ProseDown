@@ -1,11 +1,11 @@
 import type { ParentContent, PhrasingContent, Root, RootContent } from 'mdast'
-import type { MarkdownProcessor } from '..'
-import type { Mark, ProseMirrorNode } from 'prosekit/pm/model'
 import type { Editor, MarkAction } from 'prosekit/core'
-import { isBasicContainerAst, isParentContent } from '../utils'
-import type { RemoveNonCallable } from '../../utils/type'
-import { isArray } from '../../utils/is'
+import type { Mark, ProseMirrorNode } from 'prosekit/pm/model'
+import type { MarkdownProcessor } from '..'
 import type { DocExtension } from '../../extensions/doc'
+import { isArray } from '../../utils/is'
+import type { RemoveNonCallable } from '../../utils/type'
+import { isBasicContainerAst, isParentContent } from '../utils'
 
 export function fromRoot(
   ctx: MarkdownProcessor<Editor>,

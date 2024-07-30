@@ -1,13 +1,23 @@
+import type { Nodes, Root } from 'mdast'
+import type { Editor } from 'prosekit/core'
+import { Fragment, type Mark, type ProseMirrorNode } from 'prosekit/pm/model'
 import {
-  type PluginSpec,
-  type PluginView,
-  type StateField,
-  type Selection,
   type Plugin,
   PluginKey,
-  type Transaction,
+  type PluginSpec,
+  type PluginView,
+  type Selection,
+  type StateField,
   TextSelection,
+  type Transaction,
 } from 'prosekit/pm/state'
+import {
+  AddMarkStep,
+  RemoveMarkStep,
+  ReplaceAroundStep,
+  ReplaceStep,
+  Transform,
+} from 'prosekit/pm/transform'
 import {
   type Decoration,
   DecorationSet,
@@ -15,17 +25,7 @@ import {
   type EditorView,
 } from 'prosekit/pm/view'
 import type { MarkdownProcessor } from '..'
-import type { Editor } from 'prosekit/core'
-import type {
-  CachedMap,
-  CreateDecorationsAction,
-  MarkdownSyncState,
-  ReplaceResult,
-  StatusCachedMap,
-  StatusResult,
-} from './types'
-import { Fragment, type Mark, type ProseMirrorNode } from 'prosekit/pm/model'
-import type { Nodes, Root } from 'mdast'
+import { fromPhrasingContent } from '../methods'
 import {
   extractBlockTextContent,
   isBasicContainerPM,
@@ -38,16 +38,16 @@ import {
   clearCurrentDecorations,
   createDecorations,
 } from './decorations'
-import { SelectionTracker } from './selection'
-import {
-  AddMarkStep,
-  RemoveMarkStep,
-  ReplaceAroundStep,
-  ReplaceStep,
-  Transform,
-} from 'prosekit/pm/transform'
-import { fromPhrasingContent } from '../methods'
 import { MarkStepTree } from './mark-step-tree'
+import { SelectionTracker } from './selection'
+import type {
+  CachedMap,
+  CreateDecorationsAction,
+  MarkdownSyncState,
+  ReplaceResult,
+  StatusCachedMap,
+  StatusResult,
+} from './types'
 
 const MOUSEUP_META = 'mouseup'
 

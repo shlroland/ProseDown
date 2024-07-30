@@ -1,8 +1,8 @@
-import { defineMarkSpec, type Extension } from 'prosekit/core'
-import { registerAstFrom, registerDecorationsAction } from '../markdown/methods'
+import { type Extension, defineMarkSpec } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
-import { isString } from '../utils/is'
+import { registerAstFrom, registerDecorationsAction } from '../markdown/methods'
 import { createIndicatorDecorations } from '../markdown/sync'
+import { isString } from '../utils/is'
 
 export function defineStrong() {
   return defineMarkSpec({

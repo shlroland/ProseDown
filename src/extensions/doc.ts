@@ -1,5 +1,5 @@
-import { defineNodeSpec, type Extension } from "prosekit/core"
-import type { Attrs } from "prosekit/pm/model"
+import { type Extension, defineNodeSpec } from 'prosekit/core'
+import type { Attrs } from 'prosekit/pm/model'
 
 export function defineDoc(): DocExtension {
   return defineNodeSpec({
