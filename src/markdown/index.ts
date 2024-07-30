@@ -2,6 +2,7 @@ import curry from 'just-curry-it'
 import type { Root } from 'mdast'
 import type { Editor } from 'prosekit/core'
 import type { ProseMirrorNode } from 'prosekit/pm/model'
+import remarkGfm from 'remark-gfm'
 import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
 import { type Processor, unified } from 'unified'
@@ -88,7 +89,7 @@ export class MarkdownProcessor<
   createTextNode = curry(createTextNode)(this)
 
   private createBasicProcessor() {
-    return unified().use(remarkParse).use(remarkStringify)
+    return unified().use(remarkParse).use(remarkStringify).use(remarkGfm)
   }
 
   private createProcessor(plugins?: Iterable<RemarkPlugin>) {

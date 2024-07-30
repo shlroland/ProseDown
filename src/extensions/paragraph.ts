@@ -1,8 +1,4 @@
-import {
-  type Extension,
-  type ParagraphExtension,
-  defineNodeSpec,
-} from 'prosekit/core'
+import { type Extension, defineNodeSpec } from 'prosekit/core'
 export { defineParagraph } from 'prosekit/core'
 import type { StringContent } from 'mdast'
 import type { Attrs } from 'prosekit/pm/model'
@@ -13,13 +9,13 @@ import {
 } from '../markdown/methods'
 import { sanitizerText } from '../markdown/utils'
 
-type ParagraphSpecExtension = Extension<{
+export type ParagraphExtension = Extension<{
   Nodes: {
     paragraph: Attrs
   }
 }>
 
-export function defineParagraphSpec(): ParagraphSpecExtension {
+export function defineParagraphSpec(): ParagraphExtension {
   return defineNodeSpec({
     name: 'paragraph',
     content: 'inline*',

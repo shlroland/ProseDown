@@ -33,4 +33,14 @@ declare module 'mdast' {
   interface PhrasingContentMap {
     stringContent: StringContent
   }
+
+  interface TableRow {
+    align?: Table['align']
+    isHeader?: boolean
+  }
+
+  interface TableCell {
+    align?: AlignType
+    isHeader?: boolean
+  }
 }

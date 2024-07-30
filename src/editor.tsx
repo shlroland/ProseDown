@@ -17,6 +17,10 @@ as==dfa==z\`xcvx\`zio
 asdflask~~dflk~~asjdf
 asdfasdf
 
+|  1| 2 |
+|--|--|
+| 4 | 5 |
+
 1. a
 2. b
 3. c

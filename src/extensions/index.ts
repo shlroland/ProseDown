@@ -1,9 +1,10 @@
 import { defineBasicExtension } from 'prosekit/basic'
-import { defineHistory, union } from 'prosekit/core'
+import { type Union, defineHistory, union } from 'prosekit/core'
 import { defineBlockquote } from 'prosekit/extensions/blockquote'
 import { astBlockquoteFrom, astBlockquoteTo } from './blockquote'
 import { astBreakFrom, decorationBreak, defineBreak } from './break'
 import { astCodeFrom, astCodeTo, defineCode } from './code'
+import { astDeleteFrom, decorationDelete, defineDelete } from './delete'
 import { defineDoc } from './doc'
 import { astEmphasisFrom, decorationEmphasis, defineEmphasis } from './emphasis'
 import { astHeadingFrom, astHeadingTo, defineHeading } from './heading'
@@ -27,13 +28,16 @@ import {
 } from './list'
 import { astListItemFrom, astListItemTo, defineListItem } from './list-item'
 import {
+  type ParagraphExtension,
   astParagraphFrom,
   astParagraphTo,
   defineParagraph,
   stringToMarkdownPlugin,
 } from './paragraph'
 import { astStrongFrom, decorationStrong, defineStrong } from './strong'
-import { astTextFrom, defineText } from './text'
+import { defineTable } from './table'
+import { astTableCellFrom, astTableFrom, astTableRowFrom } from './table/ast'
+import { type TextExtension, astTextFrom, defineText } from './text'
 import {
   astThematicBreakFrom,
   astThematicBreakTo,
@@ -45,6 +49,8 @@ export function defineBasicDemoExtension() {
 }
 
 export type EditorExtension = ReturnType<typeof defineBasicDemoExtension>
+
+export type BasicExtension = Union<[ParagraphExtension, TextExtension]>
 
 export function defineExtension() {
   return union([
@@ -63,6 +69,8 @@ export function defineExtension() {
     defineBreak(),
     defineThematicBreak(),
     defineHighlight(),
+    defineDelete(),
+    defineTable(),
     defineHistory(),
   ])
 }
@@ -83,6 +91,10 @@ export function defineAstFrom() {
     astBreakFrom(),
     astThematicBreakFrom(),
     astHighlightFrom(),
+    astDeleteFrom(),
+    astTableFrom(),
+    astTableRowFrom(),
+    astTableCellFrom(),
   ] as const
 }
 
@@ -111,5 +123,6 @@ export function defineDecorationActions() {
     decorationLink(),
     decorationStrong(),
     decorationHighlight(),
+    decorationDelete(),
   ]
 }
