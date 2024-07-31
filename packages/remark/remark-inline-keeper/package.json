@@ -1,0 +1,17 @@
+{
+  "name": "remark-inline-keeper",
+  "version": "0.0.1",
+  "description": "Prevent unintended format parsing of inline strings",
+  "license": "MIT",
+  "devDependencies": {
+    "@tsconfig/node-lts": "^20.1.3",
+    "unified": "^11.0.5"
+  },
+  "dependencies": {
+    "micromark-util-symbol": "^2.0.0",
+    "micromark-util-types": "^2.0.0",
+    "unist-util-add": "^1.0.1"
+  },
+  "exports": "./src/index.ts",
+  "types": "./src/index.ts"
+}

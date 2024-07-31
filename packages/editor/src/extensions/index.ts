@@ -1,5 +1,10 @@
 import { defineBasicExtension } from 'prosekit/basic'
-import { type Union, defineHistory, union } from 'prosekit/core'
+import {
+  type Union,
+  defineBaseKeymap,
+  defineHistory,
+  union,
+} from 'prosekit/core'
 import { defineBlockquote } from 'prosekit/extensions/blockquote'
 import { astBlockquoteFrom, astBlockquoteTo } from './blockquote'
 import { astBreakFrom, decorationBreak, defineBreak } from './break'
@@ -37,7 +42,12 @@ import {
 import { astStrongFrom, decorationStrong, defineStrong } from './strong'
 import { defineTable } from './table'
 import { astTableCellFrom, astTableFrom, astTableRowFrom } from './table/ast'
-import { type TextExtension, astTextFrom, defineText } from './text'
+import {
+  type TextExtension,
+  astTextFrom,
+  defineText,
+  inlineKeeperRemark,
+} from './text'
 import {
   astThematicBreakFrom,
   astThematicBreakTo,
@@ -72,6 +82,7 @@ export function defineExtension() {
     defineDelete(),
     defineTable(),
     defineHistory(),
+    defineBaseKeymap(),
   ])
 }
 
@@ -112,7 +123,7 @@ export function defineAstTo() {
 }
 
 export function defineRemarkPlugins() {
-  return [stringToMarkdownPlugin(), highlightRemark()]
+  return [stringToMarkdownPlugin(), highlightRemark(), inlineKeeperRemark()]
 }
 
 export function defineDecorationActions() {

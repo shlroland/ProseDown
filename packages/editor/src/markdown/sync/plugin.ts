@@ -24,9 +24,12 @@ import {
   type EditorProps,
   type EditorView,
 } from 'prosekit/pm/view'
+import { KEEPER_END, KEEPER_START } from 'remark-inline-keeper'
+import { visit } from 'unist-util-visit'
 import type { MarkdownProcessor } from '..'
 import { fromPhrasingContent } from '../methods'
 import {
+  adjustPosition,
   extractBlockTextContent,
   isBasicContainerPM,
   isContenteditbaleFalse,
@@ -489,12 +492,22 @@ export class MarkdownSyncSpec<E extends Editor>
     text: string,
     cachedMap: CachedMap = new Map(),
   ): [Nodes, string] {
-    let ast: Nodes | undefined = cachedMap.get(text)
-    if (!ast) {
-      ast = this.processor.processor.parse(text)
+    let dummyText = text
+    if (text) {
+      dummyText = `${KEEPER_START}${text}${KEEPER_END}`
     }
 
-    cachedMap.set(text, ast)
+    let ast: Nodes | undefined = cachedMap.get(dummyText)
+    if (!ast) {
+      ast = this.processor.processor.parse(dummyText)
+    }
+
+    const offset = -1
+    visit(ast, (node) => {
+      adjustPosition(node, offset)
+    })
+
+    cachedMap.set(dummyText, ast)
 
     return [ast, text]
   }

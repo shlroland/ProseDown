@@ -1,6 +1,7 @@
 import { type Extension, defineNodeSpec } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
-import { registerAstFrom } from '../markdown/methods'
+import { remarkInlineKeeper } from 'remark-inline-keeper'
+import { registerAstFrom, registerRemarkPlugin } from '../markdown/methods'
 
 export function defineText() {
   return defineNodeSpec({
@@ -21,3 +22,7 @@ export const astTextFrom = registerAstFrom<TextExtension>()(
     return ctx.createTextNode(ast.value)
   },
 )
+
+export const inlineKeeperRemark = registerRemarkPlugin('inlineKeeper', [
+  remarkInlineKeeper,
+])

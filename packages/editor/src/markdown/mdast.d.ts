@@ -1,3 +1,5 @@
+/// <reference types="mdast-util-highlight-mark" />
+
 import 'mdast'
 declare module 'mdast' {
   type ParentContent =
