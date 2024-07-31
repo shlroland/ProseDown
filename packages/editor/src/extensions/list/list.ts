@@ -1,7 +1,7 @@
 import type { ListItem } from 'mdast'
 import { type Extension, defineNodeSpec, union } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
-import { registerAstFrom, registerAstTo } from '../markdown/methods'
+import { registerAstFrom, registerAstTo } from '../../markdown/methods'
 
 export function defineBulletListSpec() {
   return defineNodeSpec({

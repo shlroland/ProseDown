@@ -1,7 +1,7 @@
 import { type Extension, defineNodeSpec } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
 import { remarkInlineKeeper } from 'remark-inline-keeper'
-import { registerAstFrom, registerRemarkPlugin } from '../markdown/methods'
+import { registerAstFrom, registerRemarkPlugin } from '../../markdown/methods'
 
 export function defineText() {
   return defineNodeSpec({

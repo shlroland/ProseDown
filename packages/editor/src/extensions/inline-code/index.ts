@@ -1,7 +1,10 @@
 import { type Extension, defineMarkSpec } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
-import { registerAstFrom, registerDecorationsAction } from '../markdown/methods'
-import { calcNodePosition, createMarkDecoration } from '../markdown/sync'
+import {
+  registerAstFrom,
+  registerDecorationsAction,
+} from '../../markdown/methods'
+import { calcNodePosition, createMarkDecoration } from '../../markdown/sync'
 
 export function defineInlineCode() {
   return defineMarkSpec({

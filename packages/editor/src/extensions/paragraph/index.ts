@@ -6,8 +6,8 @@ import {
   registerAstFrom,
   registerAstTo,
   registerRemarkPlugin,
-} from '../markdown/methods'
-import { sanitizerText } from '../markdown/utils'
+} from '../../markdown/methods'
+import { sanitizerText } from '../../markdown/utils'
 
 export type ParagraphExtension = Extension<{
   Nodes: {

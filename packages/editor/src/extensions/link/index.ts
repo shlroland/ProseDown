@@ -1,6 +1,9 @@
 import { type Extension, type NodeChild, defineMarkSpec } from 'prosekit/core'
-import { registerAstFrom, registerDecorationsAction } from '../markdown/methods'
-import { createIndicatorDecorations } from '../markdown/sync'
+import {
+  registerAstFrom,
+  registerDecorationsAction,
+} from '../../markdown/methods'
+import { createIndicatorDecorations } from '../../markdown/sync'
 
 type LinkSpecExtension = Extension<{
   Marks: {

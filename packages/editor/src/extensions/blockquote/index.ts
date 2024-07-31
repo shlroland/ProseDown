@@ -1,7 +1,7 @@
 import type { BlockContent, DefinitionContent } from 'mdast'
 import { type Extension, defineNodeSpec } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
-import { registerAstFrom, registerAstTo } from '../markdown/methods'
+import { registerAstFrom, registerAstTo } from '../../markdown/methods'
 
 export function defineBlockquoteSpec() {
   return defineNodeSpec({

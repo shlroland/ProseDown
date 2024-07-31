@@ -1,7 +1,7 @@
 import type { Heading } from 'mdast'
 import { type Extension, defineNodeSpec } from 'prosekit/core'
-import { registerAstFrom, registerAstTo } from '../markdown/methods'
-import { extractTextContent } from '../markdown/utils'
+import { registerAstFrom, registerAstTo } from '../../markdown/methods'
+import { extractTextContent } from '../../markdown/utils'
 
 type HeadingSpecExtension = Extension<{
   Nodes: {

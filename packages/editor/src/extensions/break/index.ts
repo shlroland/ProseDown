@@ -1,6 +1,9 @@
 import { type Extension, defineNodeSpec } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
-import { registerAstFrom, registerDecorationsAction } from '../markdown/methods'
+import {
+  registerAstFrom,
+  registerDecorationsAction,
+} from '../../markdown/methods'
 
 function defineBreakSpec() {
   return defineNodeSpec({

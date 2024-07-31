@@ -30,8 +30,12 @@ import {
   astListFrom,
   astOrderedListTo,
   defineList,
-} from './list'
-import { astListItemFrom, astListItemTo, defineListItem } from './list-item'
+} from './list/list'
+import {
+  astListItemFrom,
+  astListItemTo,
+  defineListItem,
+} from './list/list-item'
 import {
   type ParagraphExtension,
   astParagraphFrom,

@@ -1,7 +1,10 @@
 import { type Extension, defineMarkSpec } from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
-import { registerAstFrom, registerDecorationsAction } from '../markdown/methods'
-import { createIndicatorDecorations } from '../markdown/sync'
+import {
+  registerAstFrom,
+  registerDecorationsAction,
+} from '../../markdown/methods'
+import { createIndicatorDecorations } from '../../markdown/sync'
 
 export function defineDelete() {
   return defineMarkSpec({

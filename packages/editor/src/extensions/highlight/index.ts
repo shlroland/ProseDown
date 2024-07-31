@@ -5,9 +5,9 @@ import {
   registerAstFrom,
   registerDecorationsAction,
   registerRemarkPlugin,
-} from '../markdown/methods'
-import { createIndicatorDecorations } from '../markdown/sync'
-import type { RemarkPlugin } from '../markdown/types'
+} from '../../markdown/methods'
+import { createIndicatorDecorations } from '../../markdown/sync'
+import type { RemarkPlugin } from '../../markdown/types'
 
 export function defineHighlight() {
   return defineMarkSpec({
