@@ -41,7 +41,15 @@ import {
 } from './paragraph'
 import { astStrongFrom, decorationStrong, defineStrong } from './strong'
 import { defineTable } from './table'
-import { astTableCellFrom, astTableFrom, astTableRowFrom } from './table/ast'
+import {
+  astTableCellFrom,
+  astTableCellTo,
+  astTableFrom,
+  astTableHeaderlTo,
+  astTableRowFrom,
+  astTableRowTo,
+  astTableTo,
+} from './table/ast'
 import {
   type TextExtension,
   astTextFrom,
@@ -119,6 +127,10 @@ export function defineAstTo() {
     astOrderedListTo(),
     astListItemTo(),
     astThematicBreakTo(),
+    astTableTo(),
+    astTableRowTo(),
+    astTableCellTo(),
+    astTableHeaderlTo(),
   ]
 }
 
