@@ -1,4 +1,11 @@
-import { type Extension, defineMarkSpec } from 'prosekit/core'
+import {
+  type Extension,
+  defineCommands,
+  defineKeymap,
+  defineMarkSpec,
+  toggleMark,
+  union,
+} from 'prosekit/core'
 import type { Attrs } from 'prosekit/pm/model'
 import {
   registerAstFrom,
@@ -8,6 +15,14 @@ import { createIndicatorDecorations } from '../../markdown/sync'
 import { isString } from '../../utils/is'
 
 export function defineStrong() {
+  return union([
+    defineStrongSpec(),
+    defineStrongCommands(),
+    defineStrongKeymap(),
+  ])
+}
+
+export function defineStrongSpec() {
   return defineMarkSpec({
     name: 'strong',
     inclusive: false,
@@ -28,9 +43,24 @@ export function defineStrong() {
   })
 }
 
+export function defineStrongCommands() {
+  return defineCommands({
+    toggleBold: () => toggleMark({ type: 'strong' }),
+  })
+}
+
+export function defineStrongKeymap() {
+  return defineKeymap({
+    'Mod-b': toggleMark({ type: 'strong' }),
+  })
+}
+
 type StrongExtension = Extension<{
   Marks: {
     strong: Attrs
+  }
+  Commands: {
+    toggleStrong: []
   }
 }>
 
