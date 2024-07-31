@@ -3,6 +3,7 @@ import type { Attrs } from 'prosekit/pm/model'
 import {
   registerAstFrom,
   registerDecorationsAction,
+  registerIndicatorContent,
 } from '../../markdown/methods'
 import { calcNodePosition, createMarkDecoration } from '../../markdown/sync'
 
@@ -31,7 +32,7 @@ export const astInlineCodeFrom = registerAstFrom<InlineCodeExtension>()(
     const firstIndicator = ctx.createTextNode('`')
     const lastIndicator = ctx.createTextNode('`')
     return ctx.editor.marks.inlineCode([firstIndicator, value, lastIndicator])
-  },
+  }
 )
 
 export const decorationInlineCode = registerDecorationsAction(
@@ -42,5 +43,10 @@ export const decorationInlineCode = registerDecorationsAction(
       createMarkDecoration(nodeStartPos, nodeStartPos + 1, info.isInRange),
       createMarkDecoration(nodeEndPos - 1, nodeEndPos, info.isInRange),
     ]
-  },
+  }
+)
+
+export const inlineCodeIndicator = registerIndicatorContent(
+  'inlineCode',
+  () => ['`', '`']
 )

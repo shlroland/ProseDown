@@ -4,6 +4,7 @@ import { remarkHighlightMark } from 'remark-highlight-mark'
 import {
   registerAstFrom,
   registerDecorationsAction,
+  registerIndicatorContent,
   registerRemarkPlugin,
 } from '../../markdown/methods'
 import { createIndicatorDecorations } from '../../markdown/sync'
@@ -28,7 +29,7 @@ type HighlightExtension = Extension<{
 
 export const highlightRemark = registerRemarkPlugin(
   'highlight',
-  remarkHighlightMark as RemarkPlugin,
+  remarkHighlightMark as RemarkPlugin
 )
 
 export const astHighlightFrom = registerAstFrom<HighlightExtension>()(
@@ -37,11 +38,16 @@ export const astHighlightFrom = registerAstFrom<HighlightExtension>()(
     const highlightAction = ctx.editor.marks.highlight
 
     return ctx.fromIndicatorContent(highlightAction, ast, text)
-  },
+  }
 )
 
 export const decorationHighlight = registerDecorationsAction(
   'highlight',
   (pos, node, info, actionMap) =>
-    createIndicatorDecorations(pos, node, info, actionMap),
+    createIndicatorDecorations(pos, node, info, actionMap)
 )
+
+export const highlightIndicator = registerIndicatorContent('highlight', () => [
+  '==',
+  '==',
+])

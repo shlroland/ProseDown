@@ -3,6 +3,7 @@ import type { Attrs } from 'prosekit/pm/model'
 import {
   registerAstFrom,
   registerDecorationsAction,
+  registerIndicatorContent,
 } from '../../markdown/methods'
 import { createIndicatorDecorations } from '../../markdown/sync'
 
@@ -35,11 +36,16 @@ export const astDeleteFrom = registerAstFrom<DeleteExtension>()(
     const deleteAction = ctx.editor.marks.delete
 
     return ctx.fromIndicatorContent(deleteAction, ast, text)
-  },
+  }
 )
 
 export const decorationDelete = registerDecorationsAction(
   'delete',
   (pos, node, info, actionMap) =>
-    createIndicatorDecorations(pos, node, info, actionMap),
+    createIndicatorDecorations(pos, node, info, actionMap)
 )
+
+export const deleteIndicator = registerIndicatorContent('delete', () => [
+  '~~',
+  '~~',
+])

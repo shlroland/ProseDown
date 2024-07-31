@@ -1,5 +1,7 @@
+import type { PhrasingContentMap } from 'mdast'
 import type { Mark, ProseMirrorNode } from 'prosekit/pm/model'
 import type { Transform } from 'prosekit/pm/transform'
+import type { IndicatorAction } from './types'
 
 interface MarkStepNode$Leaf {
   type: 'leaf'
@@ -17,9 +19,15 @@ type MarkStepNode = MarkStepNode$Parent | MarkStepNode$Leaf
 export class MarkStepTree {
   tree: MarkStepNode[]
   changedMarks: Mark[]
+  private indicatorMap: Map<keyof PhrasingContentMap, IndicatorAction>
 
-  constructor(marks: Mark[], tr: Transform) {
+  constructor(
+    marks: Mark[],
+    tr: Transform,
+    indicatorMap: Map<keyof PhrasingContentMap, IndicatorAction>
+  ) {
     this.changedMarks = marks
+    this.indicatorMap = indicatorMap
     const doc = tr.doc
     const nodes: MarkStepNode[] = []
 
@@ -63,7 +71,7 @@ export class MarkStepTree {
     currentNode: MarkStepNode,
     nodes: MarkStepNode[],
     startIndex: number,
-    targetMark: Mark,
+    targetMark: Mark
   ) {
     for (let i = startIndex; i < nodes.length; i++) {
       const node: MarkStepNode = nodes[i]
@@ -81,7 +89,7 @@ export class MarkStepTree {
   private findMarkGroup(
     nodes: MarkStepNode$Leaf[],
     startIndex: number,
-    targetMark: Mark,
+    targetMark: Mark
   ): MarkStepNode$Leaf[] {
     const markGroup: MarkStepNode$Leaf[] = []
 
@@ -133,12 +141,12 @@ export class MarkStepTree {
             children: this.findMarkGroup(
               nodes as MarkStepNode$Leaf[],
               index,
-              mark,
+              mark
             ),
           }))
 
           .sort(
-            (a, b) => b.children.length - a.children.length,
+            (a, b) => b.children.length - a.children.length
           )[0] as MarkStepNode$Parent
 
         if (parentNode) {

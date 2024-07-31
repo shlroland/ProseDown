@@ -9,22 +9,24 @@ import { defineBlockquote } from 'prosekit/extensions/blockquote'
 import { astBlockquoteFrom, astBlockquoteTo } from './blockquote'
 import { astBreakFrom, decorationBreak, defineBreak } from './break'
 import { astCodeFrom, astCodeTo, defineCode } from './code'
-import { astDeleteFrom, decorationDelete, defineDelete } from './delete'
+import { astDeleteFrom, decorationDelete, defineDelete, deleteIndicator } from './delete'
 import { defineDoc } from './doc'
-import { astEmphasisFrom, decorationEmphasis, defineEmphasis } from './emphasis'
+import { astEmphasisFrom, decorationEmphasis, defineEmphasis, emphasisIndicator } from './emphasis'
 import { astHeadingFrom, astHeadingTo, defineHeading } from './heading'
 import {
   astHighlightFrom,
   decorationHighlight,
   defineHighlight,
+  highlightIndicator,
   highlightRemark,
 } from './highlight'
 import {
   astInlineCodeFrom,
   decorationInlineCode,
   defineInlineCode,
+  inlineCodeIndicator,
 } from './inline-code'
-import { astLinkFrom, decorationLink, defineLink } from './link'
+import { astLinkFrom, decorationLink, defineLink, linkIndicator } from './link'
 import {
   astBulletListTo,
   astListFrom,
@@ -43,7 +45,7 @@ import {
   defineParagraph,
   stringToMarkdownPlugin,
 } from './paragraph'
-import { astStrongFrom, decorationStrong, defineStrong } from './strong'
+import { astStrongFrom, decorationStrong, defineStrong, strongIndicator } from './strong'
 import { defineTable } from './table'
 import {
   astTableCellFrom,
@@ -151,5 +153,16 @@ export function defineDecorationActions() {
     decorationStrong(),
     decorationHighlight(),
     decorationDelete(),
+  ]
+}
+
+export function defineIndicatorContent() {
+  return [
+    deleteIndicator(),
+    emphasisIndicator(),
+    highlightIndicator(),
+    inlineCodeIndicator(),
+    linkIndicator(),
+    strongIndicator()
   ]
 }

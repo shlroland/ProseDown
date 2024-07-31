@@ -1,4 +1,5 @@
 /// <reference types="mdast-util-highlight-mark" />
+/// <reference types="remark-math" />
 
 import 'mdast'
 declare module 'mdast' {

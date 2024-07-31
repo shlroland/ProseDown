@@ -10,6 +10,7 @@ import type { Attrs } from 'prosekit/pm/model'
 import {
   registerAstFrom,
   registerDecorationsAction,
+  registerIndicatorContent,
 } from '../../markdown/methods'
 import { createIndicatorDecorations } from '../../markdown/sync'
 import { isString } from '../../utils/is'
@@ -70,11 +71,16 @@ export const astStrongFrom = registerAstFrom<StrongExtension>()(
     const strongAction = ctx.editor.marks.strong
 
     return ctx.fromIndicatorContent(strongAction, ast, text)
-  },
+  }
 )
 
 export const decorationStrong = registerDecorationsAction(
   'strong',
   (pos, node, info, actionMap) =>
-    createIndicatorDecorations(pos, node, info, actionMap),
+    createIndicatorDecorations(pos, node, info, actionMap)
 )
+
+export const strongIndicator = registerIndicatorContent('strong', () => [
+  '**',
+  '**',
+])

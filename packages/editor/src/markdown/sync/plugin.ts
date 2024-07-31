@@ -1,4 +1,4 @@
-import type { Nodes, Root } from 'mdast'
+import type { Nodes, PhrasingContentMap, Root } from 'mdast'
 import type { Editor } from 'prosekit/core'
 import { Fragment, type Mark, type ProseMirrorNode } from 'prosekit/pm/model'
 import {
@@ -46,6 +46,7 @@ import { SelectionTracker } from './selection'
 import type {
   CachedMap,
   CreateDecorationsAction,
+  IndicatorAction,
   MarkdownSyncState,
   ReplaceResult,
   StatusCachedMap,
@@ -79,12 +80,16 @@ export class MarkdownSyncSpec<E extends Editor>
 
   private decorationsActionMap: Map<string, CreateDecorationsAction>
 
+  private indicatorMap: Map<keyof PhrasingContentMap, IndicatorAction>
+
   constructor(
     processor: MarkdownProcessor<E>,
     decorationsActions: [string, CreateDecorationsAction][],
+    indicatorActions: [keyof PhrasingContentMap, IndicatorAction][]
   ) {
     this.processor = processor
     this.decorationsActionMap = new Map(decorationsActions)
+    this.indicatorMap = new Map(indicatorActions)
   }
 
   state: StateField<MarkdownSyncState> = {
@@ -100,7 +105,7 @@ export class MarkdownSyncSpec<E extends Editor>
       cachedMap.clear()
       this.pluginState.decorations = this.pluginState.decorations.add(
         state.doc,
-        decorations,
+        decorations
       )
 
       return this.pluginState
@@ -116,14 +121,14 @@ export class MarkdownSyncSpec<E extends Editor>
 
       this.pluginState.decorations = this.pluginState.decorations.map(
         tr.mapping,
-        tr.doc,
+        tr.doc
       )
 
       const dispatchMeta = tr.getMeta(INLINE_DECO)
       if (dispatchMeta) {
         this.pluginState.decorations = this.pluginState.decorations.add(
           tr.doc,
-          dispatchMeta,
+          dispatchMeta
         )
       }
 
@@ -132,7 +137,7 @@ export class MarkdownSyncSpec<E extends Editor>
         const focused = this.editorView?.hasFocus()
         this.pluginState.decorations = clearCurrentDecorations(
           tr.doc,
-          this.pluginState.decorations,
+          this.pluginState.decorations
         )
         const cachedMap: CachedMap = new Map()
         let fromNode: ProseMirrorNode | undefined = curSelection.$from.node()
@@ -145,12 +150,12 @@ export class MarkdownSyncSpec<E extends Editor>
             tr.doc,
             pos,
             cachedMap,
-            focused ? curSelection : undefined,
+            focused ? curSelection : undefined
           )
 
           const outdatedDeocrations = this.pluginState.decorations.find(
             pos,
-            pos + node.nodeSize,
+            pos + node.nodeSize
           )
 
           this.pluginState.decorations = this.pluginState.decorations
@@ -220,7 +225,7 @@ export class MarkdownSyncSpec<E extends Editor>
       this.editorView?.dispatch(
         this.editorView?.state.tr
           .setMeta(MOUSEUP_META, true)
-          .setMeta('addToHistory', false),
+          .setMeta('addToHistory', false)
       )
     }
   }
@@ -229,7 +234,7 @@ export class MarkdownSyncSpec<E extends Editor>
     this.shouldIgnore = true
     this.editableFalse = isContenteditbaleFalse(
       ev.target as HTMLElement,
-      this.editorView!,
+      this.editorView!
     )
   }
 
@@ -237,7 +242,7 @@ export class MarkdownSyncSpec<E extends Editor>
     doc: ProseMirrorNode,
     pos: number,
     cachedMap: CachedMap,
-    selection?: Selection,
+    selection?: Selection
   ) {
     const curNode = doc.nodeAt(pos)
     if (!curNode || !shouldContainerSync(curNode)) return []
@@ -254,7 +259,7 @@ export class MarkdownSyncSpec<E extends Editor>
         selection,
         isInRange: false,
       },
-      this.decorationsActionMap,
+      this.decorationsActionMap
     )
   }
 
@@ -275,7 +280,7 @@ export class MarkdownSyncSpec<E extends Editor>
           const [ast, nodes] = this.processStepNode(node, statusCached)
           const newNode = node.type.create(
             node.attrs,
-            Fragment.fromArray(nodes),
+            Fragment.fromArray(nodes)
           )
           if (newNode.content.eq(node.content)) {
             result.set(step.from, { ast })
@@ -285,7 +290,7 @@ export class MarkdownSyncSpec<E extends Editor>
         } else {
           if (node.type.isTextblock) {
             this.pluginState.decorations = this.pluginState.decorations.remove(
-              this.pluginState.decorations.find(step.from, step.to),
+              this.pluginState.decorations.find(step.from, step.to)
             )
           }
         }
@@ -298,11 +303,11 @@ export class MarkdownSyncSpec<E extends Editor>
           const [mdText] = this.transformMarkStep(node, [step.mark], pos)
           const [ast, textNodes] = this.processStepNodeText(
             mdText,
-            statusCached,
+            statusCached
           )
           const newNode = node.type.create(
             node.attrs,
-            Fragment.fromArray(textNodes),
+            Fragment.fromArray(textNodes)
           )
           if (newNode.content.eq(node.content)) {
             result.set(pos, { ast })
@@ -326,7 +331,7 @@ export class MarkdownSyncSpec<E extends Editor>
               if (node.type.isTextblock) {
                 this.pluginState.decorations =
                   this.pluginState.decorations.remove(
-                    this.pluginState.decorations.find(pos, pos + node.nodeSize),
+                    this.pluginState.decorations.find(pos, pos + node.nodeSize)
                   )
               }
               return
@@ -335,7 +340,7 @@ export class MarkdownSyncSpec<E extends Editor>
             const [ast, nodes] = this.processStepNode(node, statusCached)
             const newNode = node.type.create(
               node.attrs,
-              Fragment.fromArray(nodes),
+              Fragment.fromArray(nodes)
             )
 
             if (newNode.content.eq(node.content)) {
@@ -363,7 +368,7 @@ export class MarkdownSyncSpec<E extends Editor>
 
   private processStepNode(
     node: ProseMirrorNode,
-    cachedMap: StatusCachedMap = new Map(),
+    cachedMap: StatusCachedMap = new Map()
   ): [Nodes, ProseMirrorNode[]] {
     const text = extractBlockTextContent(node)
     return this.processStepNodeText(text, cachedMap)
@@ -371,7 +376,7 @@ export class MarkdownSyncSpec<E extends Editor>
 
   private processStepNodeText(
     text: string,
-    cachedMap: StatusCachedMap = new Map(),
+    cachedMap: StatusCachedMap = new Map()
   ): [Nodes, ProseMirrorNode[]] {
     const cached = cachedMap.get(text)
     if (cached) {
@@ -388,7 +393,7 @@ export class MarkdownSyncSpec<E extends Editor>
   private transformMarkStep(
     doc: ProseMirrorNode,
     marks: Mark[],
-    pos: number,
+    pos: number
   ): [string, MarkStepTree, Transform] {
     const tr = new Transform(doc)
     this.pluginState.decorations
@@ -399,7 +404,8 @@ export class MarkdownSyncSpec<E extends Editor>
         tr.delete(start, end)
       })
 
-    const markStepTree = new MarkStepTree(marks, tr)
+    const markStepTree = new MarkStepTree(marks, tr, this.indicatorMap)
+    debugger
     return [markStepTree.toMarkdown(), markStepTree, tr]
   }
 
@@ -437,8 +443,8 @@ export class MarkdownSyncSpec<E extends Editor>
           this.pluginState.decorations = this.pluginState.decorations.remove(
             this.pluginState.decorations.find(
               originalPosition,
-              originalPosition + curNode.nodeSize,
-            ),
+              originalPosition + curNode.nodeSize
+            )
           )
           const decos = this.initDecorations(tr.doc, pos, cacheMap, selection)
           decorations.push(...decos)
@@ -490,7 +496,7 @@ export class MarkdownSyncSpec<E extends Editor>
 
   private parseTextAst(
     text: string,
-    cachedMap: CachedMap = new Map(),
+    cachedMap: CachedMap = new Map()
   ): [Nodes, string] {
     let dummyText = text
     if (text) {

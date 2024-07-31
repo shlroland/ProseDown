@@ -4,6 +4,7 @@ import {
   defineAstTo,
   defineDecorationActions,
   defineExtension,
+  defineIndicatorContent,
   defineRemarkPlugins,
 } from './extensions'
 import { MarkdownProcessor } from './markdown'
@@ -23,8 +24,13 @@ export function createMarkdownEditor() {
   })
 
   const decorationActions = defineDecorationActions()
+  const indicatorContent = defineIndicatorContent()
 
-  const markdownSync = defineMarkdownSync(markdownProcessor, decorationActions)
+  const markdownSync = defineMarkdownSync(
+    markdownProcessor,
+    decorationActions,
+    indicatorContent
+  )
 
   editor.use(markdownSync)
 

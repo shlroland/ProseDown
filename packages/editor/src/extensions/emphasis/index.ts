@@ -3,6 +3,7 @@ import type { Attrs } from 'prosekit/pm/model'
 import {
   registerAstFrom,
   registerDecorationsAction,
+  registerIndicatorContent,
 } from '../../markdown/methods'
 import { createIndicatorDecorations } from '../../markdown/sync'
 
@@ -33,11 +34,16 @@ export const astEmphasisFrom = registerAstFrom<EmphasisExtension>()(
   (ctx, ast, text) => {
     const strongAction = ctx.editor.marks.emphasis
     return ctx.fromIndicatorContent(strongAction, ast, text)
-  },
+  }
 )
 
 export const decorationEmphasis = registerDecorationsAction(
   'emphasis',
   (pos, node, info, actionMap) =>
-    createIndicatorDecorations(pos, node, info, actionMap),
+    createIndicatorDecorations(pos, node, info, actionMap)
 )
+
+export const emphasisIndicator = registerIndicatorContent('emphasis', () => [
+  '*',
+  '*',
+])
