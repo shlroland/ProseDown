@@ -16,7 +16,7 @@ export type CreateDecorationsAction<T extends RootContentNames = any> = (
   pos: number,
   node: RootContentMap[T],
   info: DecorationInfo,
-  actionMap: Map<string, CreateDecorationsAction>
+  actionMap: Map<string, CreateDecorationsAction>,
 ) => Decoration[]
 
 export interface DecorationSpec {
@@ -42,5 +42,5 @@ export interface MarkdownSyncState {
 export type StatusCachedMap = Map<string, [Nodes, ProseMirrorNode[]]>
 
 export type IndicatorMarkAction = (mark: Mark) => [string, string]
-export type IndicatorNodeAction = (node: Node) => string
+export type IndicatorNodeAction = (node: ProseMirrorNode) => string
 export type IndicatorAction = IndicatorMarkAction | IndicatorNodeAction

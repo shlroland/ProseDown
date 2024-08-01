@@ -9,9 +9,19 @@ import { defineBlockquote } from 'prosekit/extensions/blockquote'
 import { astBlockquoteFrom, astBlockquoteTo } from './blockquote'
 import { astBreakFrom, decorationBreak, defineBreak } from './break'
 import { astCodeFrom, astCodeTo, defineCode } from './code'
-import { astDeleteFrom, decorationDelete, defineDelete, deleteIndicator } from './delete'
+import {
+  astDeleteFrom,
+  decorationDelete,
+  defineDelete,
+  deleteIndicator,
+} from './delete'
 import { defineDoc } from './doc'
-import { astEmphasisFrom, decorationEmphasis, defineEmphasis, emphasisIndicator } from './emphasis'
+import {
+  astEmphasisFrom,
+  decorationEmphasis,
+  defineEmphasis,
+  emphasisIndicator,
+} from './emphasis'
 import { astHeadingFrom, astHeadingTo, defineHeading } from './heading'
 import {
   astHighlightFrom,
@@ -45,7 +55,12 @@ import {
   defineParagraph,
   stringToMarkdownPlugin,
 } from './paragraph'
-import { astStrongFrom, decorationStrong, defineStrong, strongIndicator } from './strong'
+import {
+  astStrongFrom,
+  decorationStrong,
+  defineStrong,
+  strongIndicator,
+} from './strong'
 import { defineTable } from './table'
 import {
   astTableCellFrom,
@@ -61,6 +76,7 @@ import {
   astTextFrom,
   defineText,
   inlineKeeperRemark,
+  textIndicator,
 } from './text'
 import {
   astThematicBreakFrom,
@@ -163,6 +179,7 @@ export function defineIndicatorContent() {
     highlightIndicator(),
     inlineCodeIndicator(),
     linkIndicator(),
-    strongIndicator()
+    strongIndicator(),
+    textIndicator(),
   ]
 }
